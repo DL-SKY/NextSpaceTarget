@@ -16,7 +16,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
     #region Unity methods
     private void Start()
     {
-        var lang = Application.systemLanguage;
+        /*var lang = Application.systemLanguage;
 
         switch (lang)
         {
@@ -26,7 +26,7 @@ public class LocalizationManager : Singleton<LocalizationManager>
             default:
                 language = ConstantsLanguage.ENGLISH;
                 break;
-        }
+        }*/
     }
 
     private void OnEnable()

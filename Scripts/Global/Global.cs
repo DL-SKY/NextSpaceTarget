@@ -3,6 +3,7 @@ using DllSky.Patterns;
 using DllSky.Utility;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -33,11 +34,14 @@ public class Global : Singleton<Global>
         Debug.Log("Start load Config.json");
         string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, "ConfigNST").text;
         CONFIGS = JsonUtility.FromJson<Configs>(json);
+        CONFIGS.Sorting();
 
         Debug.Log("Start load Settings.json");
+        //TODO: проверка наличия файла сохраненых настроек
+        //string settingsPath = System.IO.Path.Combine(Application.persistentDataPath, @"SettingsNST");
         //SETTINGS = json
         SETTINGS = new GameSettings();
-        SETTINGS.language = ConstantsLanguage.RUSSIAN;
+        SETTINGS.language = SETTINGS.GetCurrentSystemLanguage();
 
         Debug.Log("Calling the update event of the localization dictionary");
         EventManager.CallOnChangeLanguage();
@@ -68,11 +72,47 @@ public class Global : Singleton<Global>
 [System.Serializable]
 public class GameSettings
 {
-    public string language = ConstantsLanguage.RUSSIAN;
+    public string version;
+    public string language;    
+    public float volumeSound;
+    public float volumeMusic;
+    public bool mute;
+    public bool vibration;
 
-    public void ApplyDefault()
+    public bool console;
+    public bool debug;
+
+    public void ApplyDefaultSettings()
     {
+        /*var settingsConfig = Global.instance.CONFIGS.settings;
+        
+        version = settingsConfig;
+        language;
+        volumeSound;
+        volumeMusic;
+        mute;
+        vibration;
 
+        console;
+        debug;*/
+    }
+
+    public string GetCurrentSystemLanguage()
+    {
+        var lang = Application.systemLanguage;
+        string result = "";
+
+        switch (lang)
+        {
+            case SystemLanguage.Russian:
+                result = ConstantsLanguage.RUSSIAN;
+                break;
+            default:
+                result = ConstantsLanguage.ENGLISH;
+                break;
+        }
+
+        return result;
     }
 }
 
@@ -97,6 +137,11 @@ public class Configs
 
     //Сортировка...
     //configuration.ClanMembers = configuration.ClanMembers.OrderBy(x => x.level).ToList();
+    public void Sorting()
+    {
+        levelSpaceship = levelSpaceship.OrderBy(x => x.level).ToList();
+        levelEquipment = levelEquipment.OrderBy(x => x.level).ToList();
+    }
 }
 
 [System.Serializable]

@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//test git
-
 public class MainMenuSceneController : Singleton<MainMenuSceneController>
 {
     #region Variables
