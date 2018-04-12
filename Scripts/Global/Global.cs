@@ -261,6 +261,8 @@ public class ResourcesConfig
     public string subtype;
     public string rarity;
     public float chance;
+    public string image;
+    public string background;
 }
 
 [System.Serializable]
@@ -272,7 +274,6 @@ public class SpaceshipsConfig
     public int level;
     public float hp;
     public float bonusWeapon;
-    public float damageTaran;
     public float cooldown;
     public int repairTime;
     public float coefLvlHP;
