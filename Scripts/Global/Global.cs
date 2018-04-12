@@ -13,6 +13,7 @@ public class Global : Singleton<Global>
     public bool isComplete = false;
     public Configs CONFIGS;
     public GameSettings SETTINGS;
+    public Profile PROFILE;
     #endregion
 
     #region Unity methods
@@ -31,20 +32,28 @@ public class Global : Singleton<Global>
     #region Private methods
     private void InitConfigs()
     {
-        Debug.Log("Start load Config.json");
+        //Загрузка файла конфига
+        Debug.Log("Start load ConfigNST.json");
         string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, "ConfigNST").text;
         CONFIGS = JsonUtility.FromJson<Configs>(json);
         CONFIGS.Sorting();
 
-        Debug.Log("Start load Settings.json");
+        //Загрузка настроек
+        Debug.Log("Start load SettingsNST.json");
         //TODO: проверка наличия файла сохраненых настроек
         //string settingsPath = System.IO.Path.Combine(Application.persistentDataPath, @"SettingsNST");
         //SETTINGS = json
         SETTINGS = new GameSettings();
         SETTINGS.language = SETTINGS.GetCurrentSystemLanguage();
 
+        //Вызов события смены языка локализации
         Debug.Log("Calling the update event of the localization dictionary");
         EventManager.CallOnChangeLanguage();
+
+        //Загрузка профиля Игрока
+        Debug.Log("Start load ProfileNST.json");
+        //TODO: проверка наличия файла сохраненного профиля
+        PROFILE = new Profile();
     }
     #endregion
 
@@ -82,6 +91,16 @@ public class GameSettings
     public bool console;
     public bool debug;
 
+    public void LoadSettings()
+    {
+
+    }
+
+    public void SaveSettings()
+    {
+
+    }
+
     public void ApplyDefaultSettings()
     {
         /*var settingsConfig = Global.instance.CONFIGS.settings;
@@ -113,6 +132,37 @@ public class GameSettings
         }
 
         return result;
+    }
+}
+
+// ================= PROFILE ================= \\
+[System.Serializable]
+public class Profile
+{
+    public Dictionary<string, int> Items;
+
+    public void LoadProfile()
+    {
+
+    }
+
+    public void SaveProfile()
+    {
+
+    }
+
+    public int GetResource(string _id)
+    {
+        int result = 0;
+
+        //todo:
+
+        return result;
+    }
+
+    public void AddResource(string _id, int _amount)
+    {
+        //todo:
     }
 }
 
@@ -183,6 +233,7 @@ public class SkillsConfig
     public string id;
     public string name;
     public string description;
+    public int minLevel;
     public string type;
 }
 

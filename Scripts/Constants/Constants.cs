@@ -5,15 +5,20 @@
 
 public static class ConstantsResourcesPath
 {
+    //Path
     public const string RESOURCES = "Assets/Resources/";
     public const string CONFIGS = "Configs/";
     public const string PREFABS = "Prefabs/";
     public const string SPLASHSCREEN = "Prefabs/UI/SplashScreens/";
     public const string SPACEOBJECTS = "Prefabs/SpaceObjects/";
-
     public const string SCREENS = "Prefabs/UI/Screens/";
     public const string DIALOGS = "Prefabs/UI/Dialogs/";
     public const string ELEMENTS_UI = "Prefabs/UI/Elements/";
+
+    //File name
+    public const string FILE_CONFIG = "ConfigNST";
+    public const string FILE_SETTINGS = "SettingsNST";
+    public const string FILE_PROFILE = "ProfileNST";
 }
 
 public static class ConstantsScene
