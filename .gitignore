@@ -1,1 +1,6 @@
 *.meta
+
+scripts\.vs
+scripts\bin
+scripts\obj
+*.csproj
