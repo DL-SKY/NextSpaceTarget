@@ -1,6 +1,11 @@
 *.meta
 
 scripts\.vs
+scripts\.vs\*
 scripts\bin
+scripts\bin\*
 scripts\obj
+scripts\obj\*
 *.csproj
+*.csproj.user
+*.sln
