@@ -1,12 +1,11 @@
 *.meta
 
-/scripts/.vs
-/scripts/.vs/*
-/scripts/bin
-/scripts/bin/*
-/scripts/obj
-/scripts/obj/*
+/Scripts/.vs
+/Scripts/.vs/*
+/Scripts/bin
+/Scripts/bin/*
+/Scripts/obj
+/Scripts/obj/*
 *.csproj
 *.csproj.user
 *.sln
-/Scripts/obj
