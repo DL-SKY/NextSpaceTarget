@@ -77,18 +77,26 @@ public class GameSettings
 }
 
 // ================= CONFIGS ================= \\
+// Сам класс конфига + ниже классы 
 [System.Serializable]
 public class Configs
 {
+    //Таблицы из конфига (лучше сохранить последовательность)
     public List<SettingsConfig> settings = new List<SettingsConfig>();
     public List<LocalizationConfig> localization = new List<LocalizationConfig>();
     public List<ColorsConfig> colors = new List<ColorsConfig>();
     public List<RarityConfig> rarity = new List<RarityConfig>();
+    public List<SkillsConfig> skills = new List<SkillsConfig>();
+    public List<LevelSpaceshipConfig> levelSpaceship = new List<LevelSpaceshipConfig>();
+    public List<LevelEquipmentConfig> levelEquipment = new List<LevelEquipmentConfig>();
     public List<ResourcesConfig> resources = new List<ResourcesConfig>();
     public List<SpaceshipsConfig> spaceships = new List<SpaceshipsConfig>();
     public List<EquipmentsConfig> equipments = new List<EquipmentsConfig>();
     public List<AmmoConfig> ammo = new List<AmmoConfig>();
     public List<EnemiesConfig> enemies = new List<EnemiesConfig>();
+
+    //Сортировка...
+    //configuration.ClanMembers = configuration.ClanMembers.OrderBy(x => x.level).ToList();
 }
 
 [System.Serializable]
@@ -125,6 +133,31 @@ public class RarityConfig
 }
 
 [System.Serializable]
+public class SkillsConfig
+{
+    public string id;
+    public string name;
+    public string description;
+    public string type;
+}
+
+[System.Serializable]
+public class LevelSpaceshipConfig
+{
+    public int level;
+    public int experienceToNextLvl;
+    public string priceToNextLvl;
+}
+
+[System.Serializable]
+public class LevelEquipmentConfig
+{
+    public int level;
+    public int cardsToNextLvl;
+    public string priceToNextLvl;
+}
+
+[System.Serializable]
 public class ResourcesConfig
 {
     public string id;
@@ -140,6 +173,19 @@ public class SpaceshipsConfig
     public string id;
     public string name;
     public string description;
+    public int level;
+    public float hp;
+    public float bonusWeapon;
+    public float damageTaran;
+    public float cooldown;
+    public int repairTime;
+    public float coefLvlHP;
+    public float coefLvlBonus;
+    public float coefLvlTaran;
+    public float coefLvlCooldown;
+    public float coefLvlRepair;
+    public float coefPriceLvl;
+    public string[] skills;
 }
 
 [System.Serializable]
@@ -148,6 +194,19 @@ public class EquipmentsConfig
     public string id;
     public string name;
     public string description;
+    public int level;
+    public string ammo;
+    public float damage;
+    public int targets;
+    public int rounds;
+    public int burst;
+    public float accuracy;
+    public float criticalChance;
+    public float coefLvlDamage;
+    public float coefLvlAccuracy;
+    public float coefLvlCritical;
+    public float coefPriceLvl;
+    public string skill;
 }
 
 [System.Serializable]
@@ -164,6 +223,11 @@ public class EnemiesConfig
     public string id;
     public string name;
     public string description;
+    public int level;
+    public float hp;
+    public float damage;
+    public float cooldown;
+    public string skills;
 }
 
 
