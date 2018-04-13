@@ -10,6 +10,7 @@ public class ScreenManager : Singleton<ScreenManager>
     public Transform parent;
 
     private List<ScreenController> screens = new List<ScreenController>();
+    private List<DialogController> dialogs = new List<DialogController>();
     #endregion
 
     #region Unity methods
@@ -17,6 +18,12 @@ public class ScreenManager : Singleton<ScreenManager>
     {
         if (!parent)
             parent = transform;
+    }
+
+    private void Start()
+    {
+        screens.Clear();
+        dialogs.Clear();
     }
 
     private void Update()
@@ -32,9 +39,14 @@ public class ScreenManager : Singleton<ScreenManager>
     #region Public methods
     public void ShowScreen(string _name, object _data = null)
     {
-        var screen = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SCREENS, _name), parent);
+        var screen = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SCREENS, _name), parent).GetComponent<ScreenController>();
         screen.transform.SetAsLastSibling();
-        screen.GetComponent<ScreenController>().Initialize(_data);
+        //screen.GetComponent<ScreenController>().Initialize(_data);
+        screen.Initialize(_data);
+
+        screens.Add(screen);
+
+        return screen;
 
         /*
         var screen = ResourcesManager.Instance.InstantiatePrefab<ScreenController>(transform, ResourcesManagerPaths.UI_SCREENS, _type.ToString());
@@ -50,12 +62,19 @@ public class ScreenManager : Singleton<ScreenManager>
 
     public DialogController ShowDialog(string _name)
     {
-        return ShowDialog<DialogController>(_name);
+        var dialog = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.DIALOGS, _name), parent).GetComponent<DialogController>();
+        dialog.transform.SetAsLastSibling();
+
+        dialogs.Add(dialog);
+
+        return dialog;
+
+        //return ShowDialog<DialogController>(_name);
     }
 
-    public DialogController ShowErrorDialog(string _text, string _techInfo = null)
+    public void /*DialogController*/ ShowErrorDialog(string _text, string _techInfo = null)
     {
-        if (screens.Count > 0)
+        /*if (screens.Count > 0)
             _text += "\n" + LocalizationManager.Get(LocalizationKeys.ERROR_INFO_SCREEN, screens[screens.Count - 1].Type.ToString());
 
         if (_techInfo == null)
@@ -63,7 +82,7 @@ public class ScreenManager : Singleton<ScreenManager>
 
         var dialog = ShowDialog<ErrorDialogController>(DialogNameConstants.ERROR, AlwaysOverlayCanvas);
         dialog.Initialize(_text, _techInfo);
-        return dialog;
+        return dialog;*/
     }
     /*
     /// <summary>
