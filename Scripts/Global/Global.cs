@@ -74,6 +74,18 @@ public class Global : Singleton<Global>
         _strJson = JsonUtility.ToJson((SpaceShipData)CONFIGS.spaceshipsData[0], true);
         Debug.Log(_strJson);*/
     }
+
+    [ContextMenu("Check CONFIG")]
+    private void CheckConfigNST()
+    {
+        //Загрузка файла конфига
+        Debug.Log("Start load ConfigNST.json");
+        string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, "ConfigNST").text;
+        Configs config = JsonUtility.FromJson<Configs>(json);
+        config.Sorting();
+
+        //
+    }
     #endregion
 }
 
