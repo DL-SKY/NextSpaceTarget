@@ -78,13 +78,64 @@ public class Global : Singleton<Global>
     [ContextMenu("Check CONFIG")]
     private void CheckConfigNST()
     {
+        var startTime = System.DateTime.UtcNow;        
+
         //Загрузка файла конфига
         Debug.Log("Start load ConfigNST.json");
         string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, "ConfigNST").text;
         Configs config = JsonUtility.FromJson<Configs>(json);
         config.Sorting();
 
-        //
+        //Проверка "Localization"
+        foreach (var item in config.localization)
+        {
+            if (string.IsNullOrEmpty(item.rus) || string.IsNullOrEmpty(item.eng))
+                Debug.LogError("[CONFIG.Localization] Null or empty: " + item.id);
+        }
+
+        //Проверка "Resources"
+        foreach (var item in config.resources)
+        {
+            string primaryKey;
+            switch (item.type)
+            {
+                case "spaceship":
+                    primaryKey = config.spaceships.Find(x => x.id == item.id);
+                    break;
+                case "weapon":
+                case "module":
+                    primaryKey = config.equipments.Find(x => x.id == item.id);
+                    break;
+                case "ammo":
+                    primaryKey = config.ammo.Find(x => x.id == item.id);
+                    break;
+                case "enemy":
+                    primaryKey = config.enemies.Find(x => x.id == item.id);
+                    break;
+            }
+            if (string.IsNullOrEmpty(primaryKey))
+                Debug.logError("[CONFIG.Resources] Not found primary key: " + item.id);
+        }
+
+        //Проверка "Spaceships"
+        foreach (var item in config.spaceships)
+        {
+
+        }
+
+        //Проверка "Equipments"
+        foreach (var item in config.equipments)
+        {
+
+        }
+
+        //Проверка "Enemies"
+        foreach (var item in config.enemies)
+        {
+
+        }
+
+        Debug.Log("TOTAL TIME (ms):" + (System.DateTime.UtcNow - startTime).TotalMilliseconds);
     }
     #endregion
 }
