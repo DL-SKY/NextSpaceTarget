@@ -1,5 +1,6 @@
 ﻿using DllSky.Patterns;
 using DllSky.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,9 @@ public class ScreenManager : Singleton<ScreenManager>
     #region Variables
     public Transform parent;
 
+    [SerializeField]
     private List<ScreenController> screens = new List<ScreenController>();
+    [SerializeField]
     private List<DialogController> dialogs = new List<DialogController>();
     #endregion
 
@@ -31,7 +34,10 @@ public class ScreenManager : Singleton<ScreenManager>
         //Кнопка "Назад"
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            Debug.Log(KeyCode.Escape);
+            Debug.Log("[ScreenManager] " + KeyCode.Escape);
+
+            if (dialogs.Count > 0)
+                dialogs[dialogs.Count - 1].Close(false);
         }
     }
     #endregion
@@ -41,12 +47,9 @@ public class ScreenManager : Singleton<ScreenManager>
     {
         var screen = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SCREENS, _name), parent).GetComponent<ScreenController>();
         screen.transform.SetAsLastSibling();
-        //screen.GetComponent<ScreenController>().Initialize(_data);
         screen.Initialize(_data);
 
         screens.Add(screen);
-
-        return screen;
 
         /*
         var screen = ResourcesManager.Instance.InstantiatePrefab<ScreenController>(transform, ResourcesManagerPaths.UI_SCREENS, _type.ToString());
@@ -62,15 +65,39 @@ public class ScreenManager : Singleton<ScreenManager>
 
     public DialogController ShowDialog(string _name)
     {
-        var dialog = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.DIALOGS, _name), parent).GetComponent<DialogController>();
+        var screenParent = parent;
+
+        if (screens.Count > 0)
+            screenParent = screens[screens.Count - 1].GetComponent<Transform>();
+
+        var dialog = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.DIALOGS, _name), screenParent).GetComponent<DialogController>();
         dialog.transform.SetAsLastSibling();
 
         dialogs.Add(dialog);
 
         return dialog;
-
-        //return ShowDialog<DialogController>(_name);
     }
+
+    public void CloseDialog(DialogController _dialog)
+    {
+        dialogs.Remove(_dialog);
+        //Destroy(_dialog.gameObject);
+        /*int index = dialogs.FindIndex(x => x.id == _dialog.id);
+
+        Debug.Log(_dialog.id);
+        Debug.Log(index);
+
+        if (index > 0)
+            dialogs.RemoveAt(index);*/
+    }
+
+
+
+
+
+
+
+
 
     public void /*DialogController*/ ShowErrorDialog(string _text, string _techInfo = null)
     {

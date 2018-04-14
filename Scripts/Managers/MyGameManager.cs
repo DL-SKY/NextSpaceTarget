@@ -23,7 +23,7 @@ public class MyGameManager : Singleton<MyGameManager>
     #region Private methods
     private void ApplySettings()
     {
-        Debug.Log("Application.targetFrameRate: " + Application.targetFrameRate);
+        Debug.Log("[MyGameManager] Application.targetFrameRate: " + Application.targetFrameRate);
     }
     #endregion
 
@@ -38,7 +38,7 @@ public class MyGameManager : Singleton<MyGameManager>
         ApplySettings();
 
         //TEST 1: Загрузка тестовой сцены
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(1.0f);
 
         yield return SceneManager.LoadSceneAsync(ConstantsScene.MAIN_MENU, LoadSceneMode.Additive);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName(ConstantsScene.MAIN_MENU));

@@ -9,7 +9,7 @@ public class SplashScreenManager : Singleton<SplashScreenManager>
     #region Variables
     public Transform parent;
 
-    private GameObject splashScreen;
+    private GameObject splashScreen;    
     #endregion
 
     #region Unity methods
@@ -57,21 +57,25 @@ public class SplashScreenManager : Singleton<SplashScreenManager>
 
     public IEnumerator HideSplashScreen()
     {
+        DialogController controller = splashScreen.GetComponent<DialogController>();
+
         if (splashScreen.name.Contains("StartingGame"))
         {
-            splashScreen.GetComponent<DialogController>().CloseSplashScreenImmediately();
-            yield return splashScreen.GetComponent<DialogController>().Wait();
+            controller.CloseSplashScreenImmediately();
+            yield return controller.Wait();
             yield break;
         }
 
-        splashScreen.GetComponent<DialogController>().CloseSplashScreen();
-        yield return splashScreen.GetComponent<DialogController>().Wait();
+        controller.CloseSplashScreen();
+        yield return controller.Wait();
     }
 
     public IEnumerator HideSplashScreenImmediately()
     {
-        splashScreen.GetComponent<DialogController>().CloseSplashScreenImmediately();
-        yield return splashScreen.GetComponent<DialogController>().Wait();
+        DialogController controller = splashScreen.GetComponent<DialogController>();
+
+        controller.CloseSplashScreenImmediately();
+        yield return controller.Wait();
     }
     #endregion
 }

@@ -1,9 +1,8 @@
 ﻿using DllSky.Managers;
 using DllSky.Patterns;
 using DllSky.Utility;
+using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
@@ -22,10 +21,10 @@ public class Global : Singleton<Global>
     #region Public methods
     public void Initialize()
     {
-        Debug.Log("Start GLOBAL initialize");
+        Debug.Log("[GLOBAL] Start GLOBAL initialize");
         InitConfigs();
         isComplete = true;
-        Debug.Log("Complete GLOBAL initialize");
+        Debug.Log("[GLOBAL] Complete GLOBAL initialize");
     }
     #endregion
 
@@ -33,27 +32,24 @@ public class Global : Singleton<Global>
     private void InitConfigs()
     {
         //Загрузка файла конфига
-        Debug.Log("Start load ConfigNST.json");
-        string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, "ConfigNST").text;
+        var startTime = DateTime.UtcNow;        
+        string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, ConstantsResourcesPath.FILE_CONFIG).text;
+        Debug.Log("[GLOBAL.CONFIG] Start load ConfigNST.json");
         CONFIGS = JsonUtility.FromJson<Configs>(json);
         CONFIGS.Sorting();
+        Debug.Log("[GLOBAL.CONFIG] TOTAL TIME (ms): " + (DateTime.UtcNow - startTime).TotalMilliseconds);
 
         //Загрузка настроек
-        Debug.Log("Start load SettingsNST.json");
-        //TODO: проверка наличия файла сохраненых настроек
-        //string settingsPath = System.IO.Path.Combine(Application.persistentDataPath, @"SettingsNST");
-        //SETTINGS = json
-        SETTINGS = new GameSettings();
-        SETTINGS.language = SETTINGS.GetCurrentSystemLanguage();
+        //LOG - в методе
+        SETTINGS = ExtensionGlobal.LoadSettings();
 
         //Вызов события смены языка локализации
-        Debug.Log("Calling the update event of the localization dictionary");
+        Debug.Log("[CONFIG] Calling the update event of the localization dictionary");
         EventManager.CallOnChangeLanguage();
 
         //Загрузка профиля Игрока
-        Debug.Log("Start load ProfileNST.json");
-        //TODO: проверка наличия файла сохраненного профиля
-        PROFILE = new Profile();
+        //LOG - в методе
+        PROFILE = ExtensionGlobal.LoadProfile();
     }
     #endregion
 
@@ -61,28 +57,14 @@ public class Global : Singleton<Global>
     #endregion
 
     #region Context menu
-    [ContextMenu("Show JSON (SpaceShipData)")]
-    private void ShowJSONSpaceShipData()
-    {
-        /*if (CONFIGS.spaceshipsData.Count < 1)
-        {
-            Debug.Log("CONFIGS.spaceshipsData.Count < 1");
-            return;
-        }
-
-        string _strJson;
-        _strJson = JsonUtility.ToJson((SpaceShipData)CONFIGS.spaceshipsData[0], true);
-        Debug.Log(_strJson);*/
-    }
-
     [ContextMenu("Check CONFIG")]
     private void CheckConfigNST()
     {
-        var startTime = System.DateTime.UtcNow;        
+        var startTime = DateTime.UtcNow;        
 
         //Загрузка файла конфига
-        Debug.Log("Start load ConfigNST.json");
-        string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, "ConfigNST").text;
+        Debug.Log("[CONFIG] Start load ConfigNST.json");
+        string json = ResourcesManager.Load<TextAsset>(ConstantsResourcesPath.CONFIGS, ConstantsResourcesPath.FILE_CONFIG).text;
         Configs config = JsonUtility.FromJson<Configs>(json);
         config.Sorting();
 
@@ -96,25 +78,25 @@ public class Global : Singleton<Global>
         //Проверка "Resources"
         foreach (var item in config.resources)
         {
-            string primaryKey;
+            object configObject = new object();
             switch (item.type)
             {
                 case "spaceship":
-                    primaryKey = config.spaceships.Find(x => x.id == item.id);
+                    configObject = config.spaceships.Find(x => x.id == item.id);
                     break;
                 case "weapon":
                 case "module":
-                    primaryKey = config.equipments.Find(x => x.id == item.id);
+                    configObject = config.equipments.Find(x => x.id == item.id);
                     break;
                 case "ammo":
-                    primaryKey = config.ammo.Find(x => x.id == item.id);
+                    configObject = config.ammo.Find(x => x.id == item.id);
                     break;
                 case "enemy":
-                    primaryKey = config.enemies.Find(x => x.id == item.id);
+                    configObject = config.enemies.Find(x => x.id == item.id);
                     break;
             }
-            if (string.IsNullOrEmpty(primaryKey))
-                Debug.logError("[CONFIG.Resources] Not found primary key: " + item.id);
+            if (configObject == null)
+                Debug.LogError("[CONFIG.Resources] Not found primary key: " + item.id);
         }
 
         //Проверка "Spaceships"
@@ -135,7 +117,20 @@ public class Global : Singleton<Global>
 
         }
 
-        Debug.Log("TOTAL TIME (ms):" + (System.DateTime.UtcNow - startTime).TotalMilliseconds);
+        Debug.Log("[CONFIG] Check complete");
+        Debug.Log("[CONFIG] TOTAL TIME (ms): " + (DateTime.UtcNow - startTime).TotalMilliseconds);
+    }
+
+    [ContextMenu("Save SETTINGS")]
+    private void SaveSettings()
+    {
+        SETTINGS.SaveSettings();
+    }
+
+    [ContextMenu("Save PROFILE")]
+    private void SaveProfile()
+    {
+        PROFILE.SaveProfile();
     }
     #endregion
 }
@@ -153,80 +148,13 @@ public class GameSettings
 
     public bool console;
     public bool debug;
-
-    public void LoadSettings()
-    {
-
-    }
-
-    public void SaveSettings()
-    {
-
-    }
-
-    public void ApplyDefaultSettings()
-    {
-        /*var settingsConfig = Global.instance.CONFIGS.settings;
-        
-        version = settingsConfig;
-        language;
-        volumeSound;
-        volumeMusic;
-        mute;
-        vibration;
-
-        console;
-        debug;*/
-    }
-
-    public string GetCurrentSystemLanguage()
-    {
-        var lang = Application.systemLanguage;
-        string result = "";
-
-        switch (lang)
-        {
-            case SystemLanguage.Russian:
-                result = ConstantsLanguage.RUSSIAN;
-                break;
-            default:
-                result = ConstantsLanguage.ENGLISH;
-                break;
-        }
-
-        return result;
-    }
 }
 
 // ================= PROFILE ================= \\
 [System.Serializable]
 public class Profile
 {
-    public Dictionary<string, int> Items;
-
-    public void LoadProfile()
-    {
-
-    }
-
-    public void SaveProfile()
-    {
-
-    }
-
-    public int GetResource(string _id)
-    {
-        int result = 0;
-
-        //todo:
-
-        return result;
-    }
-
-    public void AddResource(string _id, int _amount)
-    {
-        //todo:
-    }
+    public Dictionary<string, int> Items;    
 }
 
 // ================= CONFIGS ================= \\
@@ -246,15 +174,7 @@ public class Configs
     public List<SpaceshipsConfig> spaceships = new List<SpaceshipsConfig>();
     public List<EquipmentsConfig> equipments = new List<EquipmentsConfig>();
     public List<AmmoConfig> ammo = new List<AmmoConfig>();
-    public List<EnemiesConfig> enemies = new List<EnemiesConfig>();
-
-    //Сортировка...
-    //configuration.ClanMembers = configuration.ClanMembers.OrderBy(x => x.level).ToList();
-    public void Sorting()
-    {
-        levelSpaceship = levelSpaceship.OrderBy(x => x.level).ToList();
-        levelEquipment = levelEquipment.OrderBy(x => x.level).ToList();
-    }
+    public List<EnemiesConfig> enemies = new List<EnemiesConfig>();    
 }
 
 [System.Serializable]

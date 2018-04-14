@@ -18,6 +18,9 @@ public class DialogController : MonoBehaviour
     {
         result = _result;
         isOpened = false;
+
+        ScreenManager.Instance.CloseDialog(this);
+
         Destroy(gameObject);
     }
 
@@ -34,7 +37,8 @@ public class DialogController : MonoBehaviour
     public void CloseSplashScreenImmediately()
     {
         result = true;
-        isOpened = false;
+        isOpened = false;       
+
         Destroy(gameObject);
     }
     #endregion

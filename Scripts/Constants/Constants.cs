@@ -32,6 +32,11 @@ public static class ConstantsScreen
     public const string MAIN_MENU = "MainMenuScreen";
 }
 
+public static class ConstantsDialog
+{
+    public const string SETTINGS = "SettingsDialog";
+}
+
 public static class ConstantsColor
 {
     public const string DARK_AMBER = "dark_amber";

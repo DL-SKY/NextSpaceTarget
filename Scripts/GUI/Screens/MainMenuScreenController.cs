@@ -10,6 +10,14 @@ public class MainMenuScreenController : ScreenController
     #region Unity methods
     #endregion
 
+    #region Buttons method
+    public void OnClickSettings()
+    {
+        //ScreenManager.Instance.ShowDialog(ConstantsDialog.SETTINGS);
+        StartCoroutine(Dialog());
+    }
+    #endregion
+
     #region Public methods
     public override void Initialize(object _data)
     {
@@ -28,6 +36,12 @@ public class MainMenuScreenController : ScreenController
 
         //yield return SplashScreenManager.Instance.HideSplashScreen();
         yield return null;
+    }
+
+    private IEnumerator Dialog()
+    {
+        var dialog = ScreenManager.Instance.ShowDialog(ConstantsDialog.SETTINGS);
+        yield return dialog.Wait();
     }
     #endregion
 }

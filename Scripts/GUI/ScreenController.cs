@@ -29,6 +29,7 @@ public class ScreenController : MonoBehaviour
     public virtual void Close()
     {
         isOpened = false;
+
     }
     #endregion
 
