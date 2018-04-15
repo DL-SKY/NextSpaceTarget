@@ -25,11 +25,13 @@ public static class ConstantsScene
 {
     public const string MAIN_SCENE = "Main";
     public const string MAIN_MENU = "MainMenu";
+    public const string CAREER = "Career";
 }
 
 public static class ConstantsScreen
 {
     public const string MAIN_MENU = "MainMenuScreen";
+    public const string CAREER = "CareerScreen";
 }
 
 public static class ConstantsDialog

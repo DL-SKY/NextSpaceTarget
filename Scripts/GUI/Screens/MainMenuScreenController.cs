@@ -33,8 +33,7 @@ public class MainMenuScreenController : ScreenController
     #region Coroutines
     private IEnumerator Show()
     {
-
-        //yield return SplashScreenManager.Instance.HideSplashScreen();
+        yield return SplashScreenManager.Instance.HideSplashScreen();
         yield return null;
     }
 

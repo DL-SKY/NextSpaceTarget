@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class MyGameManager : Singleton<MyGameManager>
 {
     #region Variables
+    private string currentScene = null;
     #endregion
 
     #region Unity methods
@@ -18,6 +19,10 @@ public class MyGameManager : Singleton<MyGameManager>
     #endregion
 
     #region Public methods
+    public void LoadScene(string _scene, LoadSceneMode _mode = LoadSceneMode.Additive)
+    {
+        StartCoroutine( LoadSceneCoroutine(_scene, _mode) );
+    }
     #endregion
 
     #region Private methods
@@ -34,17 +39,24 @@ public class MyGameManager : Singleton<MyGameManager>
         yield return SplashScreenManager.Instance.ShowStartingGame();
         //Инициализация конфига
         Global.Instance.Initialize();
+        //Ожидание окончания загрузки конфига и настроек
+        while (!Global.Instance.isComplete)
+            yield return null;
 
         ApplySettings();
 
         //TEST 1: Загрузка тестовой сцены
         yield return new WaitForSeconds(1.0f);
 
-        yield return SceneManager.LoadSceneAsync(ConstantsScene.MAIN_MENU, LoadSceneMode.Additive);
-        SceneManager.SetActiveScene(SceneManager.GetSceneByName(ConstantsScene.MAIN_MENU));
+
+
+        //yield return SceneManager.LoadSceneAsync(ConstantsScene.MAIN_MENU, LoadSceneMode.Additive);
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName(ConstantsScene.MAIN_MENU));
+        LoadScene(ConstantsScene.MAIN_MENU);
         while (!MainMenuSceneController.Instance.isInit)
-        yield return null;
-        yield return SplashScreenManager.Instance.HideSplashScreenImmediately();
+            yield return null;
+
+        //yield return SplashScreenManager.Instance.HideSplashScreenImmediately();
         //-------------------
 
         //yield return SplashScreenManager.Instance.ShowBlack();
@@ -61,8 +73,26 @@ public class MyGameManager : Singleton<MyGameManager>
         //Debug.Log(DllSky.Utility.UtilityBase.GetStringFormatAmount6(amount));
         //-------------------
 
+        //TEST 3:
+        //yield return new WaitForSeconds(2.5f);
+        //LoadScene(ConstantsScene.CAREER);
 
 
+    }
+
+    private IEnumerator LoadSceneCoroutine(string _scene, LoadSceneMode _mode)
+    {
+        //Выгружаем предыдущую сцену
+        if (SceneManager.sceneCount > 1)
+        {
+            var oldScene = SceneManager.GetSceneAt(SceneManager.sceneCount-1);
+            yield return SceneManager.UnloadSceneAsync(oldScene);
+        }
+
+        //Загружаем новую сцену
+        currentScene = _scene;
+        yield return SceneManager.LoadSceneAsync(currentScene, _mode);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName(currentScene));
     }
     #endregion
 }

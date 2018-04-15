@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuSceneController : Singleton<MainMenuSceneController>
+public class CareerSceneController : Singleton<CareerSceneController>
 {
     #region Variables
     [Header("Settings")]
