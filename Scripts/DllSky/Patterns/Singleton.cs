@@ -1,6 +1,4 @@
 ﻿/*
-© Alexander Danilovsky, 2017
-----------------------------
 = Паттерн Singleton =
 */
 
