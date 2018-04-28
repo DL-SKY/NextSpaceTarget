@@ -45,11 +45,41 @@ public class ScreenManager : Singleton<ScreenManager>
     #region Public methods
     public void ShowScreen(string _name, object _data = null)
     {
+        //Проверка с текущим экраном
+        if (screens.Count > 0 && screens[screens.Count - 1].screenName == _name)
+        {
+            Debug.LogWarning("[ScreenManager] Trying to re-open the screen: " + _name);
+            SplashScreenManager.Instance.HideSplashScreenImmediately();
+            return;
+        }
+
+        //Проверка со список открытых экранов
+        foreach (var item in screens)
+        {
+            if (item.screenName == _name)
+            {
+                Debug.LogWarning("[ScreenManager] The screen \"" + _name + "\" is in the history of open screens.");
+                //...
+                return;
+            }
+        }
+
         var screen = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SCREENS, _name), parent).GetComponent<ScreenController>();
         screen.transform.SetAsLastSibling();
         screen.Initialize(_data);
+        screen.screenName = _name;
+
+        //Деактивируем предыдущие экраны
+        foreach (var item in screens)
+        {
+            var itemGO = item.gameObject;
+
+            if (itemGO.activeSelf)
+                itemGO.SetActive(false);
+        }
 
         screens.Add(screen);
+        Debug.Log("[ScreenManager] Screen loaded: " + _name);
 
         /*
         var screen = ResourcesManager.Instance.InstantiatePrefab<ScreenController>(transform, ResourcesManagerPaths.UI_SCREENS, _type.ToString());

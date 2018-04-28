@@ -13,8 +13,12 @@ public class MainMenuScreenController : ScreenController
     #region Buttons method
     public void OnClickSettings()
     {
-        //ScreenManager.Instance.ShowDialog(ConstantsDialog.SETTINGS);
         StartCoroutine(Dialog());
+    }
+
+    public void OnClickGameMode00()
+    {
+        StartCoroutine(GameMode00());
     }
     #endregion
 
@@ -41,6 +45,15 @@ public class MainMenuScreenController : ScreenController
     {
         var dialog = ScreenManager.Instance.ShowDialog(ConstantsDialog.SETTINGS);
         yield return dialog.Wait();
+    }
+
+    private IEnumerator GameMode00()
+    {
+        //Прелоадер
+        yield return SplashScreenManager.Instance.ShowBlack();
+        yield return new WaitForSeconds(2.5f);
+
+        MyGameManager.Instance.LoadScene(ConstantsScene.GAME_MODE_00);
     }
     #endregion
 }

@@ -27,6 +27,11 @@ public class SplashScreenManager : Singleton<SplashScreenManager>
     #endregion
 
     #region Public methods
+    public void HideSplashScreenImmediately()
+    {
+        DialogController controller = splashScreen.GetComponent<DialogController>();
+        controller.CloseSplashScreenImmediately();
+    }
     #endregion
 
     #region Private methods
@@ -57,7 +62,10 @@ public class SplashScreenManager : Singleton<SplashScreenManager>
 
     public IEnumerator HideSplashScreen()
     {
-        DialogController controller = splashScreen.GetComponent<DialogController>();
+        if (!splashScreen)
+            yield break;
+
+        DialogController controller = splashScreen.GetComponent<DialogController>();        
 
         if (splashScreen.name.Contains("StartingGame"))
         {
@@ -70,12 +78,12 @@ public class SplashScreenManager : Singleton<SplashScreenManager>
         yield return controller.Wait();
     }
 
-    public IEnumerator HideSplashScreenImmediately()
+    /*public IEnumerator HideSplashScreenImmediately()
     {
         DialogController controller = splashScreen.GetComponent<DialogController>();
 
         controller.CloseSplashScreenImmediately();
         yield return controller.Wait();
-    }
+    }*/
     #endregion
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class ScreenController : MonoBehaviour
 {
     #region Variables
+    public string screenName = "";
+
     private bool isInit = false;
     private bool isOpened = true;
     #endregion

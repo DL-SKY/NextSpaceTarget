@@ -26,12 +26,14 @@ public static class ConstantsScene
     public const string MAIN_SCENE = "Main";
     public const string MAIN_MENU = "MainMenu";
     public const string CAREER = "Career";
+    public const string GAME_MODE_00 = "GameMode00";
 }
 
 public static class ConstantsScreen
 {
     public const string MAIN_MENU = "MainMenuScreen";
     public const string CAREER = "CareerScreen";
+    public const string GAME_MODE_00 = "GameMode00Screen";
 }
 
 public static class ConstantsDialog

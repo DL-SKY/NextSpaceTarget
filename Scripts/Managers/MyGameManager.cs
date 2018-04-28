@@ -53,8 +53,8 @@ public class MyGameManager : Singleton<MyGameManager>
         //yield return SceneManager.LoadSceneAsync(ConstantsScene.MAIN_MENU, LoadSceneMode.Additive);
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName(ConstantsScene.MAIN_MENU));
         LoadScene(ConstantsScene.MAIN_MENU);
-        while (!MainMenuSceneController.Instance.isInit)
-            yield return null;
+        //while (!MainMenuSceneController.Instance.isInit)
+            //yield return null;
 
         //yield return SplashScreenManager.Instance.HideSplashScreenImmediately();
         //-------------------
@@ -63,7 +63,7 @@ public class MyGameManager : Singleton<MyGameManager>
 
 
         //TEST 2:
-        ScreenManager.Instance.ShowScreen(ConstantsScreen.MAIN_MENU);
+        //ScreenManager.Instance.ShowScreen(ConstantsScreen.MAIN_MENU);
         //-------------------
 
         //Test3:

@@ -3,11 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MainMenuSceneController : Singleton<MainMenuSceneController>
+public class GameMode00SceneController : Singleton<GameMode00SceneController>
 {
     #region Variables
-    //[Header("Settings")]
-    //public bool isInit = false;
     #endregion
 
     #region Unity methods
@@ -30,7 +28,7 @@ public class MainMenuSceneController : Singleton<MainMenuSceneController>
         //-------------------------------
         //TODO: testing
         //------------------------------
-        ScreenManager.Instance.ShowScreen(ConstantsScreen.MAIN_MENU);
+        ScreenManager.Instance.ShowScreen(ConstantsScreen.GAME_MODE_00);
     }
     #endregion
 }
