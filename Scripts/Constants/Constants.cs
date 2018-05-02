@@ -1,6 +1,6 @@
-﻿public static class Constants
+﻿public static class ConstantsGameSettings
 {
-
+    public static float CELL_SIZE = 1.0f;
 }
 
 public static class ConstantsResourcesPath
@@ -10,7 +10,7 @@ public static class ConstantsResourcesPath
     public const string CONFIGS = "Configs/";
     public const string PREFABS = "Prefabs/";
     public const string SPLASHSCREEN = "Prefabs/UI/SplashScreens/";
-    public const string SPACEOBJECTS = "Prefabs/SpaceObjects/";
+    public const string SPACEOBJECTS = "Prefabs/Models/Objects/";
     public const string SCREENS = "Prefabs/UI/Screens/";
     public const string DIALOGS = "Prefabs/UI/Dialogs/";
     public const string ELEMENTS_UI = "Prefabs/UI/Elements/";
@@ -59,32 +59,10 @@ public static class ConstantsLanguage
 
 #region ENUM
 //Тип объекта
-public enum EnumObjectType
+public enum EnumSpaceObject
 {
-	NA = 0,
-    Star,
-    Planet,
-
-	Spaceship,
-}
-
-//Типоразмер
-public enum EnumSizeType
-{
-    NA = 0,
-	XXS,
-	XS,
-	S,
-	M,
-	L,
-	XL,
-	XXL,
-}
-
-//Типы кораблей
-public enum EnumShipType
-{
-
+    Void = 0,
+    Box = 1,
 }
 #endregion
 

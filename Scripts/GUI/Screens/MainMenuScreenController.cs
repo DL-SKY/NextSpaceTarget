@@ -51,7 +51,7 @@ public class MainMenuScreenController : ScreenController
     {
         //Прелоадер
         yield return SplashScreenManager.Instance.ShowBlack();
-        yield return new WaitForSeconds(2.5f);
+        //yield return new WaitForSeconds(2.5f);
 
         MyGameManager.Instance.LoadScene(ConstantsScene.GAME_MODE_00);
     }
