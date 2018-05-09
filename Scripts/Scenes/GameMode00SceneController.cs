@@ -21,15 +21,18 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     public int countBoxs;
 
 
-
-    //private List<SpaceObjects> objects = new List<SpaceObjects>();
+    private List<SpaceObject> objects = new List<SpaceObject>();
     private Transform space;
+
+    private GameObject player;
     #endregion
 
     #region Unity methods
     private void Start()
     {
         space = new GameObject("SPACE").transform;
+
+        TestMethod();
 
         StartCoroutine(Initialize());
     }
@@ -80,6 +83,10 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
                             countBoxs++;
                             Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACEOBJECTS, "Box01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
                             break;
+
+                        case (int)EnumSpaceObject.Player:
+                            player = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
+                            break;
                     }
                 }
 
@@ -90,6 +97,9 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     {
         if (!space)
             return;
+
+        var camera = Camera.main;
+        camera.transform.SetParent(null);
 
         for (int i = 0; i < space.childCount; i++)
             Destroy(space.GetChild(i).gameObject);
@@ -116,4 +126,10 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
         GenerateGameBoard();
     }
     #endregion
+
+    private void TestMethod()
+    {
+        if (percentBox <= 0.0f)
+            percentBox = Random.Range(0.1f, 1.0f);
+    }
 }

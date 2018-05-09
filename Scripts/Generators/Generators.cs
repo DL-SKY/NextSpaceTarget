@@ -12,6 +12,7 @@ public static class Generator
     {
         int[,,] matrix = new int[_data.LengthX, _data.LengthY, _data.LengthZ];
 
+        //Игровое поле, объекты
         for (int x = 0; x < _data.LengthX; x++)
             for (int y = 0; y < _data.LengthY; y++)
                 for (int z = 0; z < _data.LengthZ; z++)
@@ -27,6 +28,9 @@ public static class Generator
 
                     matrix[x, y, z] = (int)random;
                 }
+
+        //Игрок
+        matrix[0, 0, 0] = (int)EnumSpaceObject.Player;
 
         return matrix;
     }
