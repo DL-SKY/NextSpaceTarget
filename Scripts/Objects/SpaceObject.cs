@@ -5,8 +5,13 @@ using UnityEngine;
 public class SpaceObject : MonoBehaviour
 {
     #region Variables
-    public int healthCurrent;
-    public int healthMax = 5;
+    [Header("Steps")]
+    public int stepsCurrent;
+    public int stepsMax = 1;
+
+    [Header("Hit Points")]
+    public int hitPointsCurrent;
+    public int hitPointsMax = 5;
 
     public EnumSpaceObject typeObject;
 
@@ -22,7 +27,7 @@ public class SpaceObject : MonoBehaviour
     }
     #endregion
 
-    #region Public methods
+    #region Public methods: Initialization
     virtual public void Initialize()
     {
         gameModeController = GameMode00SceneController.Instance;
@@ -32,165 +37,214 @@ public class SpaceObject : MonoBehaviour
         if (rg == null)
             rg = gameObject.AddComponent<Rigidbody>();
 
-        healthCurrent = healthMax;
+        hitPointsCurrent = hitPointsMax;
+        stepsCurrent = stepsMax;
     }
+    #endregion
 
+    #region Public methods: Move and Rotation  
+    //Движение вперед
     public bool ToForward()
     {
+        //Если идет анимация
         if (!isEndAnimation)
             return false;
-
+        //Движение на клетку с объектом невозможно
         if (CheckToHitToOneVoxel(transform.TransformDirection(Vector3.forward)))
             return false;
 
         var newPosition = transform.position + transform.forward * ConstantsGameSettings.CELL_SIZE;
-
+        //Дижение за пределы Игрового поля невозможно
         if (CheckToEndBoard(newPosition))
             return false;
 
         newPosition = new Vector3(  Mathf.RoundToInt(newPosition.x),
                                     Mathf.RoundToInt(newPosition.y),
                                     Mathf.RoundToInt(newPosition.z) );
-        //rg.MovePosition(newPosition);
+        //Запускаем анимацию перемещения
         StartCoroutine(MoveAnimation(transform.position, newPosition));
         return true;
     }
 
-    /*public void ToLeft()
+    //Движение влево
+    public bool ToLeft()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
-
+            return false;
+        //Движение на клетку с объектом невозможно
         if (CheckToHitToOneVoxel(transform.TransformDirection(Vector3.left)))
-            return;
+            return false;
 
         var newPosition = transform.position - transform.right * ConstantsGameSettings.CELL_SIZE;
-
+        //Дижение за пределы Игрового поля невозможно
         if (CheckToEndBoard(newPosition))
-            return;
+            return false;
 
         newPosition = new Vector3(  Mathf.RoundToInt(newPosition.x),
                                     Mathf.RoundToInt(newPosition.y),
                                     Mathf.RoundToInt(newPosition.z) );
-        rg.MovePosition(newPosition);
+        //Запускаем анимацию перемещения
+        StartCoroutine(MoveAnimation(transform.position, newPosition));
+        return true;
     }
 
-    public void ToRight()
+    //Движение вправо
+    public bool ToRight()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
-
+            return false;
+        //Движение на клетку с объектом невозможно
         if (CheckToHitToOneVoxel(transform.TransformDirection(Vector3.right)))
-            return;
+            return false;
 
         var newPosition = transform.position + transform.right * ConstantsGameSettings.CELL_SIZE;
-
+        //Дижение за пределы Игрового поля невозможно
         if (CheckToEndBoard(newPosition))
-            return;
+            return false;
 
         newPosition = new Vector3(  Mathf.RoundToInt(newPosition.x),
                                     Mathf.RoundToInt(newPosition.y),
                                     Mathf.RoundToInt(newPosition.z) );
-        rg.MovePosition(newPosition);
+        //Запускаем анимацию перемещения
+        StartCoroutine(MoveAnimation(transform.position, newPosition));
+        return true;
     }
 
-    public void ToTop()
+    //Движение вверх
+    public bool ToTop()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
-
+            return false;
+        //Движение на клетку с объектом невозможно
         if (CheckToHitToOneVoxel(transform.TransformDirection(Vector3.up)))
-            return;
+            return false;
 
         var newPosition = transform.position + transform.up * ConstantsGameSettings.CELL_SIZE;
-
+        //Дижение за пределы Игрового поля невозможно
         if (CheckToEndBoard(newPosition))
-            return;
+            return false;
 
         newPosition = new Vector3(  Mathf.RoundToInt(newPosition.x),
                                     Mathf.RoundToInt(newPosition.y),
                                     Mathf.RoundToInt(newPosition.z) );
-        rg.MovePosition(newPosition);
+        //Запускаем анимацию перемещения
+        StartCoroutine(MoveAnimation(transform.position, newPosition));
+        return true;
     }
 
-    public void ToBottom()
+    //Движение вниз
+    public bool ToBottom()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
-
+            return false;
+        //Движение на клетку с объектом невозможно
         if (CheckToHitToOneVoxel(transform.TransformDirection(Vector3.down)))
-            return;
+            return false;
 
         var newPosition = transform.position - transform.up * ConstantsGameSettings.CELL_SIZE;
-
+        //Дижение за пределы Игрового поля невозможно
         if (CheckToEndBoard(newPosition))
-            return;
+            return false;
 
         newPosition = new Vector3(  Mathf.RoundToInt(newPosition.x),
                                     Mathf.RoundToInt(newPosition.y),
                                     Mathf.RoundToInt(newPosition.z) );
-        rg.MovePosition(newPosition);
+        //Запускаем анимацию перемещения
+        StartCoroutine(MoveAnimation(transform.position, newPosition));
+        return true;
     }
 
-    public void ToPitchUp()
+    //Тангаж вверх ?????
+    public bool ToPitchUp()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
+            return false;
 
         var deltaRotation = Quaternion.AngleAxis(-90, Vector3.right);
-        rg.rotation *= deltaRotation;
+        //Запускаем анимацию вращения
+        StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
+        return true;
     }
 
-    public void ToPitchDown()
+    //Тангаж вниз ?????
+    public bool ToPitchDown()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
+            return false;
 
         var deltaRotation = Quaternion.AngleAxis(90, Vector3.right);
-        rg.rotation *= deltaRotation;
+        //Запускаем анимацию вращения
+        StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
+        return true;
     }
 
-    public void ToYawLeft()
+    //Рыскание влево
+    public bool ToYawLeft()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
+            return false;
 
         var deltaRotation = Quaternion.AngleAxis(-90, Vector3.up);
-        rg.rotation *= deltaRotation;
+        //Запускаем анимацию вращения
+        StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
+        return true;
     }
 
-    public void ToYawRight()
+    //Рыскание вправо
+    public bool ToYawRight()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
+            return false;
 
         var deltaRotation = Quaternion.AngleAxis(90, Vector3.up);
-        rg.rotation *= deltaRotation;
+        //Запускаем анимацию вращения
+        StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
+        return true;
     }
 
-    public void ToRollLeft()
+    //Крен влево
+    public bool ToRollLeft()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
+            return false;
 
         var deltaRotation = Quaternion.AngleAxis(90, Vector3.forward);
-        rg.rotation *= deltaRotation;
+        //Запускаем анимацию вращения
+        StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
+        return true;
     }
 
-    public void ToRollRight()
+    //Крен вправо
+    public bool ToRollRight()
     {
+        //Если идет анимация
         if (!isEndAnimation)
-            return;
+            return false;
 
         var deltaRotation = Quaternion.AngleAxis(-90, Vector3.forward);
-        rg.rotation *= deltaRotation;
-    }*/ 
+        //Запускаем анимацию вращения
+        StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
+        return true;
+    }
+    #endregion
+
+    #region Public methods: Other
+
     #endregion
 
     #region Protected methods
     protected bool CheckToHitToOneVoxel(Vector3 _direction)
     {
-        //TODO:
+        //TODO: определить, на какие из занятых клеток нельзя перемещаться
 
         bool result = false;
 
@@ -228,16 +282,33 @@ public class SpaceObject : MonoBehaviour
     #endregion
 
     #region Coroutines
+    //Анимация перемещения
     protected IEnumerator MoveAnimation(Vector3 _oldPosition, Vector3 _newPosition )
     {
         var T = ConstantsGameSettings.TIME_ANIMATION;
         var t = 0.0f;
 
-        //rg.MovePosition(_newPosition);
         while (transform.position != _newPosition)
         {         
             var newPos = Vector3.Lerp( _oldPosition, _newPosition, Mathf.Clamp01(t/T) );
             rg.MovePosition(newPos);
+
+            t += Time.deltaTime;
+
+            yield return null;
+        }
+    }
+
+    //Анимация вращения
+    protected IEnumerator RotateAnimation(Quaternion _oldRotation, Quaternion _newRotation)
+    {
+        var T = ConstantsGameSettings.TIME_ANIMATION;
+        var t = 0.0f;
+
+        while (transform.rotation != _newRotation)
+        {
+            var newRot = Quaternion.Lerp(_oldRotation, _newRotation, Mathf.Clamp01(t / T));
+            rg.rotation *= newRot;
 
             t += Time.deltaTime;
 
@@ -251,6 +322,42 @@ public class SpaceObject : MonoBehaviour
     protected void ContextMenuToForward()
     {
         ToForward();
+    }
+
+    [ContextMenu("To Left")]
+    protected void ContextMenuToLeft()
+    {
+        ToLeft();
+    }
+
+    [ContextMenu("To Right")]
+    protected void ContextMenuToRight()
+    {
+        ToRight();
+    }
+
+    [ContextMenu("To Pitch Up")]
+    protected void ContextMenuToPitchUp()
+    {
+        ToPitchUp();
+    }
+
+    [ContextMenu("To Pitch Down")]
+    protected void ContextMenuToPitchDown()
+    {
+        ToPitchDown();
+    }
+
+    [ContextMenu("To Roll Left")]
+    protected void ContextMenuToRollLeft()
+    {
+        ToRollLeft();
+    }
+
+    [ContextMenu("To Roll Right")]
+    protected void ContextMenuToRollRight()
+    {
+        ToRollRight();
     }
     #endregion
 }
