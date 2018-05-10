@@ -5,15 +5,17 @@ using UnityEngine;
 public class SpaceObject : MonoBehaviour
 {
     #region Variables
+    [Header("Type")]
+    public EnumSpaceObject typeObject;
+
     [Header("Steps")]
     public int stepsCurrent;
     public int stepsMax = 1;
 
     [Header("Hit Points")]
+    public bool isImmortal = false;
     public int hitPointsCurrent;
-    public int hitPointsMax = 5;
-
-    public EnumSpaceObject typeObject;
+    public int hitPointsMax = 5;    
 
     private GameMode00SceneController gameModeController;
     private Rigidbody rg;
@@ -158,7 +160,7 @@ public class SpaceObject : MonoBehaviour
         return true;
     }
 
-    //Тангаж вверх ?????
+    //Тангаж вверх
     public bool ToPitchUp()
     {
         //Если идет анимация
@@ -171,7 +173,7 @@ public class SpaceObject : MonoBehaviour
         return true;
     }
 
-    //Тангаж вниз ?????
+    //Тангаж вниз
     public bool ToPitchDown()
     {
         //Если идет анимация
@@ -238,7 +240,17 @@ public class SpaceObject : MonoBehaviour
     #endregion
 
     #region Public methods: Other
+    virtual public void SetDamage(int _damage)
+    {
+        //Неуязвимые объекты
+        if (isImmortal)
+            return;
 
+        hitPointsCurrent -= _damage;
+
+        if (hitPointsCurrent <= 0)
+            ToDie();
+    }
     #endregion
 
     #region Protected methods
@@ -254,11 +266,11 @@ public class SpaceObject : MonoBehaviour
         {
             if (hit.rigidbody != rg)
             {
-                if (hit.rigidbody.tag != "AmmoArmy" && hit.rigidbody.tag != "AmmoRocket")
+                /*if (hit.rigidbody.tag != ConstantsTag.AmmoArmy && hit.rigidbody.tag != ConstantsTag.AmmoRocket)
                 {
                     result = true;
                     break;
-                }
+                }*/
             }
         }
 
@@ -267,24 +279,58 @@ public class SpaceObject : MonoBehaviour
 
     protected bool CheckToEndBoard(Vector3 _newPosition)
     {
-        if (Mathf.RoundToInt(_newPosition.x) < 0 || Mathf.RoundToInt(_newPosition.x) > ConstantsGameSettings.CELL_SIZE * gameModeController.lengthX)
+        //Проверка выхода за пределы игрового поля + допустимая внешняя граница для перемещения
+        if (Mathf.RoundToInt(_newPosition.x) < -ConstantsGameSettings.BEYOND_BORDERS 
+            || Mathf.RoundToInt(_newPosition.x) > ConstantsGameSettings.CELL_SIZE * (gameModeController.lengthX + ConstantsGameSettings.BEYOND_BORDERS))
             return true;
-        if (Mathf.RoundToInt(_newPosition.y) < 0 || Mathf.RoundToInt(_newPosition.y) > ConstantsGameSettings.CELL_SIZE * gameModeController.lengthY)
+        if (Mathf.RoundToInt(_newPosition.y) < -ConstantsGameSettings.BEYOND_BORDERS 
+            || Mathf.RoundToInt(_newPosition.y) > ConstantsGameSettings.CELL_SIZE * (gameModeController.lengthY + ConstantsGameSettings.BEYOND_BORDERS))
             return true;
-        if (Mathf.RoundToInt(_newPosition.z) < 0 || Mathf.RoundToInt(_newPosition.z) > ConstantsGameSettings.CELL_SIZE * gameModeController.lengthZ)
+        if (Mathf.RoundToInt(_newPosition.z) < -ConstantsGameSettings.BEYOND_BORDERS 
+            || Mathf.RoundToInt(_newPosition.z) > ConstantsGameSettings.CELL_SIZE * (gameModeController.lengthZ + ConstantsGameSettings.BEYOND_BORDERS))
             return true;
 
         return false;
     }
-    #endregion
 
-    #region Private methods
+    virtual protected void ToDie()
+    {
+        //TODO: определить действия при уничтожении объекта
+
+        /*if (tag == "Rocket")
+        {
+            var boom = Instantiate(Resources.Load<GameObject>(ConstPrefabs.PARTICLES_ROCKET_BOOM), transform.position, Quaternion.identity, transform.parent);
+            Destroy(boom, 5.0f);
+        }
+
+        if (tag != "Player")
+            Destroy(this.gameObject);*/
+    }
     #endregion
 
     #region Coroutines
+    //Ход ИИ
+    public IEnumerator ToAITurn()
+    {
+        //TODO:
+
+        while (stepsCurrent > 0)
+        {
+            //Ожидаем, пока не закончится анимация
+            while (!isEndAnimation)
+                yield return null;
+            
+            //...
+
+            stepsCurrent--;
+        }        
+    }
+
     //Анимация перемещения
     protected IEnumerator MoveAnimation(Vector3 _oldPosition, Vector3 _newPosition )
     {
+        isEndAnimation = false;
+
         var T = ConstantsGameSettings.TIME_ANIMATION;
         var t = 0.0f;
 
@@ -297,11 +343,15 @@ public class SpaceObject : MonoBehaviour
 
             yield return null;
         }
+
+        isEndAnimation = true;
     }
 
     //Анимация вращения
     protected IEnumerator RotateAnimation(Quaternion _oldRotation, Quaternion _newRotation)
     {
+        isEndAnimation = false;
+
         var T = ConstantsGameSettings.TIME_ANIMATION;
         var t = 0.0f;
 
@@ -314,6 +364,8 @@ public class SpaceObject : MonoBehaviour
 
             yield return null;
         }
+
+        isEndAnimation = true;
     }
     #endregion
 

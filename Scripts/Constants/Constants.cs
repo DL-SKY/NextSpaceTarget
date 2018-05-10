@@ -1,9 +1,15 @@
 ﻿public static class ConstantsGameSettings
 {
     public static float CELL_SIZE = 1.0f;           //Сторона вокселя игрового пространства (одна игровая клетка)
+    public static float BEYOND_BORDERS = 10.0f;     //Воксели за пределами Игрового поля, по которым можно перемещаться
     public static float RAY_COEF = 1.1f;            //Длина луча для проверки столкновения
 
     public static float TIME_ANIMATION = 1.0f;      //Скорость анимаций перемещения
+}
+
+public static class ConstantsTag
+{
+    public static string TAG_PLAYER = "Player";
 }
 
 public static class ConstantsResourcesPath
