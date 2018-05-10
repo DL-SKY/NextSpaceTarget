@@ -167,7 +167,7 @@ public class SpaceObject : MonoBehaviour
         if (!isEndAnimation)
             return false;
 
-        var deltaRotation = Quaternion.AngleAxis(-90, Vector3.right);
+        var deltaRotation = transform.rotation * Quaternion.AngleAxis(-90, Vector3.right);
         //Запускаем анимацию вращения
         StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
         return true;
@@ -180,7 +180,7 @@ public class SpaceObject : MonoBehaviour
         if (!isEndAnimation)
             return false;
 
-        var deltaRotation = Quaternion.AngleAxis(90, Vector3.right);
+        var deltaRotation = transform.rotation * Quaternion.AngleAxis(90, Vector3.right);
         //Запускаем анимацию вращения
         StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
         return true;
@@ -193,7 +193,7 @@ public class SpaceObject : MonoBehaviour
         if (!isEndAnimation)
             return false;
 
-        var deltaRotation = Quaternion.AngleAxis(-90, Vector3.up);
+        var deltaRotation = transform.rotation * Quaternion.AngleAxis(-90, Vector3.up);
         //Запускаем анимацию вращения
         StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
         return true;
@@ -206,7 +206,7 @@ public class SpaceObject : MonoBehaviour
         if (!isEndAnimation)
             return false;
 
-        var deltaRotation = Quaternion.AngleAxis(90, Vector3.up);
+        var deltaRotation = transform.rotation * Quaternion.AngleAxis(90, Vector3.up);
         //Запускаем анимацию вращения
         StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
         return true;
@@ -219,7 +219,7 @@ public class SpaceObject : MonoBehaviour
         if (!isEndAnimation)
             return false;
 
-        var deltaRotation = Quaternion.AngleAxis(90, Vector3.forward);
+        var deltaRotation = transform.rotation * Quaternion.AngleAxis(90, Vector3.forward);
         //Запускаем анимацию вращения
         StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
         return true;
@@ -232,7 +232,7 @@ public class SpaceObject : MonoBehaviour
         if (!isEndAnimation)
             return false;
 
-        var deltaRotation = Quaternion.AngleAxis(-90, Vector3.forward);
+        var deltaRotation = transform.rotation * Quaternion.AngleAxis(-90, Vector3.forward);
         //Запускаем анимацию вращения
         StartCoroutine(RotateAnimation(transform.rotation, deltaRotation));
         return true;
@@ -266,11 +266,11 @@ public class SpaceObject : MonoBehaviour
         {
             if (hit.rigidbody != rg)
             {
-                /*if (hit.rigidbody.tag != ConstantsTag.AmmoArmy && hit.rigidbody.tag != ConstantsTag.AmmoRocket)
+                if (hit.rigidbody.tag != ConstantsTag.TAG_VOID && hit.rigidbody.tag != ConstantsTag.TAG_VOID)
                 {
                     result = true;
                     break;
-                }*/
+                }
             }
         }
 
@@ -297,13 +297,13 @@ public class SpaceObject : MonoBehaviour
     {
         //TODO: определить действия при уничтожении объекта
 
-        /*if (tag == "Rocket")
+        /*if (tag == ConstantsTag.Rocket)
         {
             var boom = Instantiate(Resources.Load<GameObject>(ConstPrefabs.PARTICLES_ROCKET_BOOM), transform.position, Quaternion.identity, transform.parent);
             Destroy(boom, 5.0f);
         }
 
-        if (tag != "Player")
+        if (tag != ConstantsTag.Player)
             Destroy(this.gameObject);*/
     }
     #endregion
@@ -336,7 +336,7 @@ public class SpaceObject : MonoBehaviour
 
         while (transform.position != _newPosition)
         {         
-            var newPos = Vector3.Lerp( _oldPosition, _newPosition, Mathf.Clamp01(t/T) );
+            var newPos = Vector3.Lerp( _oldPosition, _newPosition, Mathf.Clamp01(t / T) );
             rg.MovePosition(newPos);
 
             t += Time.deltaTime;
@@ -358,7 +358,7 @@ public class SpaceObject : MonoBehaviour
         while (transform.rotation != _newRotation)
         {
             var newRot = Quaternion.Lerp(_oldRotation, _newRotation, Mathf.Clamp01(t / T));
-            rg.rotation *= newRot;
+            rg.rotation = newRot;
 
             t += Time.deltaTime;
 

@@ -9,6 +9,7 @@
 
 public static class ConstantsTag
 {
+    public static string TAG_VOID = "Void";
     public static string TAG_PLAYER = "Player";
 }
 
