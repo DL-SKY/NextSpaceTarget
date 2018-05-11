@@ -15,6 +15,9 @@ namespace DllSky.Managers
 
         public delegate void OnChangeLanguage();
         public delegate void OnApplyLanguage();
+
+        public delegate void OnStartPlayerTurn();
+        public delegate void OnEndPlayerTurn();
         #endregion
 
         #region Actions
@@ -22,6 +25,9 @@ namespace DllSky.Managers
 
         public static event OnChangeLanguage eventOnChangeLanguage;
         public static event OnApplyLanguage eventOnApplyLanguage;
+
+        public static event OnStartPlayerTurn eventOnStartPlayerTurn;
+        public static event OnEndPlayerTurn eventOnEndPlayerTurn;
         #endregion
 
         #region Public methods
@@ -41,6 +47,18 @@ namespace DllSky.Managers
         {
             if (eventOnApplyLanguage != null)
                 eventOnApplyLanguage.Invoke();
+        }
+
+        public static void CallOnStartPlayerTurn()
+        {
+            if (eventOnStartPlayerTurn != null)
+                eventOnStartPlayerTurn.Invoke();
+        }
+
+        public static void CallOnEndPlayerTurn()
+        {
+            if (eventOnEndPlayerTurn != null)
+                eventOnEndPlayerTurn.Invoke();
         }
         #endregion
     }

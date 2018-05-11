@@ -8,7 +8,7 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
 {
     #region Variables
     public bool isInit = false;
-
+    
     [Header("Matrix")]
     public int lengthX;
     public int lengthY;
@@ -19,6 +19,9 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     public int countVoxels;
     public int countVoid;
     public int countBoxs;
+
+    [Header("Game")]
+    public bool isPlayerTurn = false;
 
 
     private List<SpaceObject> objects = new List<SpaceObject>();
@@ -36,6 +39,20 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
 
         StartCoroutine(Initialize());
     }
+
+    private void OnEnable()
+    {
+        //Подписываемся на события
+        EventManager.eventOnStartPlayerTurn += HandlerOnStartPlayerTurn;
+        EventManager.eventOnEndPlayerTurn += HandlerOnEndPlayerTurn;
+    }
+
+    private void OnDisable()
+    {
+        //Отписываемся от событий
+        EventManager.eventOnStartPlayerTurn -= HandlerOnStartPlayerTurn;
+        EventManager.eventOnEndPlayerTurn -= HandlerOnEndPlayerTurn;
+    }
     #endregion
 
     #region Public methods
@@ -45,6 +62,8 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     private void GenerateGameBoard()
     {
         isInit = false;
+        isPlayerTurn = false;
+        objects.Clear();
 
         if (lengthX < 1)
             lengthX = 10;
@@ -104,18 +123,61 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
         for (int i = 0; i < space.childCount; i++)
             Destroy(space.GetChild(i).gameObject);
     }
+
+    private void HandlerOnStartPlayerTurn()
+    {
+        isPlayerTurn = true;
+        player.PrepareToNewTurn();
+    }
+
+    private void HandlerOnEndPlayerTurn()
+    {
+        isPlayerTurn = false;
+        StartCoroutine(StartAITurn());
+    }
     #endregion
 
     #region Coroutines
     private IEnumerator Initialize()
     {
         yield return null;
-        //-------------------------------
+        //-------------------------------      
+        
         //TODO: testing
         GenerateGameBoard();
         //------------------------------
         //isInit = true;
         ScreenManager.Instance.ShowScreen(ConstantsScreen.GAME_MODE_00);
+    }
+
+    private IEnumerator StartAITurn()
+    {
+        if (objects.Count > 0)
+        {
+            //Перебираем объекты на игровом поле с ИИ
+            for (int i = 0; i < objects.Count; i++)
+            {
+                if (objects[i] != null)
+                {
+                    //yield return new WaitForSeconds(0.1f);
+                    //TODO...
+                    //objects[i].
+                    //yield return objects[i].ToAITurn();
+                }
+            }
+
+            //Проверяем список на актуальность
+            for (int i = objects.Count - 1; i >= 0; i--)
+            {
+                if (objects[i] == null)
+                    objects.RemoveAt(i);
+            }
+        }
+
+        EventManager.CallOnStartPlayerTurn();
+
+
+        yield return null;
     }
     #endregion
 

@@ -15,11 +15,33 @@ public class SpaceObject : MonoBehaviour
     [Header("Hit Points")]
     public bool isImmortal = false;
     public int hitPointsCurrent;
-    public int hitPointsMax = 5;    
+    public int hitPointsMax = 5;
+    public int shieldPointsCurrent;
+    public int shieldPointsMax = 0;
 
-    private GameMode00SceneController gameModeController;
-    private Rigidbody rg;
-    private bool isEndAnimation = true;
+    [Header("Parameters")]
+    [SerializeField]
+    protected bool isVisible = true;
+    [SerializeField]
+    protected bool isScanned = true;
+
+    protected GameMode00SceneController gameModeController;
+    protected Rigidbody rg;
+    protected bool isEndAnimation = true;
+    #endregion
+
+    #region Get/Set
+    public bool IsVisible
+    {
+        get { return isVisible; }
+        set { isVisible = value; }
+    }
+
+    public bool isScanned
+    {
+        get { return isScanned; }
+        set { isScanned = value; }
+    }
     #endregion
 
     #region Unity methods
@@ -35,12 +57,11 @@ public class SpaceObject : MonoBehaviour
         gameModeController = GameMode00SceneController.Instance;
 
         rg = GetComponent<Rigidbody>();
-
         if (rg == null)
             rg = gameObject.AddComponent<Rigidbody>();
 
         hitPointsCurrent = hitPointsMax;
-        stepsCurrent = stepsMax;
+        shieldPointsCurrent = shieldPointsMax;
     }
     #endregion
 
@@ -246,10 +267,23 @@ public class SpaceObject : MonoBehaviour
         if (isImmortal)
             return;
 
-        hitPointsCurrent -= _damage;
+        if (shieldPointsCurrent > 0)
+        {
+            shieldPointsCurrent -= _damage;
+            if (shieldPointsCurrent < 0)
+                shieldPointsCurrent = 0;        
+        }
+        else
+        {
+            hitPointsCurrent -= _damage;
+            if (hitPointsCurrent <= 0)
+                ToDie();
+        }        
+    }
 
-        if (hitPointsCurrent <= 0)
-            ToDie();
+    virtual public void PrepareToNewTurn()
+    {
+        stepsCurrent = stepsMax;
     }
     #endregion
 
