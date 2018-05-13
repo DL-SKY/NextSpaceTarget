@@ -1,10 +1,14 @@
-﻿using System.Collections;
+﻿using DllSky.Managers;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpaceObject : MonoBehaviour
 {
     #region Variables
+    public bool inCamera = false;
+    public RendererController rendererController;
+
     [Header("Type")]
     public EnumSpaceObject typeObject;
 
@@ -37,7 +41,7 @@ public class SpaceObject : MonoBehaviour
         set { isVisible = value; }
     }
 
-    public bool isScanned
+    public bool IsScanned
     {
         get { return isScanned; }
         set { isScanned = value; }
@@ -48,6 +52,11 @@ public class SpaceObject : MonoBehaviour
     private void Start()
     {
         Initialize();
+    }
+
+    virtual protected void OnMouseUpAsButton()
+    {
+        Debug.Log(name);
     }
     #endregion
 
@@ -278,7 +287,9 @@ public class SpaceObject : MonoBehaviour
             hitPointsCurrent -= _damage;
             if (hitPointsCurrent <= 0)
                 ToDie();
-        }        
+        }
+
+        EventManager.CallOnChangeHitPoints();
     }
 
     virtual public void PrepareToNewTurn()
@@ -444,6 +455,12 @@ public class SpaceObject : MonoBehaviour
     protected void ContextMenuToRollRight()
     {
         ToRollRight();
+    }
+
+    [ContextMenu("Damage 1")]
+    protected void ContextMenuSetDamage()
+    {
+        SetDamage(1);
     }
     #endregion
 }

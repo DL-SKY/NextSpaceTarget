@@ -18,6 +18,8 @@ namespace DllSky.Managers
 
         public delegate void OnStartPlayerTurn();
         public delegate void OnEndPlayerTurn();
+
+        public delegate void OnChangeHitPoints();
         #endregion
 
         #region Actions
@@ -28,6 +30,8 @@ namespace DllSky.Managers
 
         public static event OnStartPlayerTurn eventOnStartPlayerTurn;
         public static event OnEndPlayerTurn eventOnEndPlayerTurn;
+
+        public static event OnChangeHitPoints eventOnChangeHitPoints;
         #endregion
 
         #region Public methods
@@ -59,6 +63,12 @@ namespace DllSky.Managers
         {
             if (eventOnEndPlayerTurn != null)
                 eventOnEndPlayerTurn.Invoke();
+        }
+
+        public static void CallOnChangeHitPoints()
+        {
+            if (eventOnChangeHitPoints != null)
+                eventOnChangeHitPoints.Invoke();
         }
         #endregion
     }

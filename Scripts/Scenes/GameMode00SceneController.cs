@@ -1,4 +1,5 @@
-﻿using DllSky.Patterns;
+﻿using DllSky.Managers;
+using DllSky.Patterns;
 using DllSky.Utility;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,10 +25,12 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     public bool isPlayerTurn = false;
 
 
-    private List<SpaceObject> objects = new List<SpaceObject>();
+    [SerializeField]
     private Transform space;
-
-    private GameObject player;
+    [SerializeField]
+    private List<SpaceObject> objects = new List<SpaceObject>();
+    [SerializeField]
+    private SpaceObject player;
     #endregion
 
     #region Unity methods
@@ -56,6 +59,15 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     #endregion
 
     #region Public methods
+    public SpaceObject GetPlayer()
+    {
+        return player;
+    }
+
+    public List<SpaceObject> GetObjects()
+    {
+        return objects;
+    }
     #endregion
 
     #region Private methods
@@ -100,11 +112,13 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
                             break;
                         case (int)EnumSpaceObject.Box:
                             countBoxs++;
-                            Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACEOBJECTS, "Box01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
+                            var boxObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACEOBJECTS, "Box01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
+                            objects.Add(boxObj.GetComponent<SpaceObject>());
                             break;
 
                         case (int)EnumSpaceObject.Player:
-                            player = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
+                            var playerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
+                            player = playerObj.GetComponent<SpaceObject>();
                             break;
                     }
                 }
