@@ -1,11 +1,10 @@
-﻿using DllSky.Managers;
-using DllSky.Classes;
+﻿using DllSky.Extensions;
+using DllSky.Managers;
 using DllSky.Patterns;
 using DllSky.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DllSky.Extensions;
 
 public class GameMode00SceneController : Singleton<GameMode00SceneController>
 {

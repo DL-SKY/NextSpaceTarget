@@ -80,6 +80,12 @@ public enum EnumSpaceObject
 
     Player = 100,
 }
+
+public enum EnumUIMarkerType
+{
+    Default = 0,
+    Player = 100,
+}
 #endregion
 
 

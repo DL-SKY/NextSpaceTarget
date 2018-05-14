@@ -7,12 +7,17 @@ using UnityEngine;
 public class UIMarker : MonoBehaviour
 {
     #region Variables
+    public EnumUIMarkerType type;
     public Transform target;
     public ProgressBar progressBar;
     public bool isInit = false;
 
+    [SerializeField]
+    private float distance;
+
     private RectTransform selfTransform;
-    private SpaceObject targetScript;    
+    private SpaceObject targetScript;
+    private Transform player;
     new private Camera camera;
     #endregion
 
@@ -36,31 +41,46 @@ public class UIMarker : MonoBehaviour
         }
 
         selfTransform.position = camera.WorldToScreenPoint(target.position);
-
         transform.localScale = (targetScript.inCamera == true && targetScript.IsVisible) ? Vector3.one : Vector3.zero;
+
+        UpdateDistance();
     }
     #endregion
 
     #region Public methods
-    public void Initialize(SpaceObject _target)
+    public void Initialize(SpaceObject _target, Transform _player, EnumUIMarkerType _type = EnumUIMarkerType.Default)
     {
+        type = _type;
+
         targetScript = _target;
         target = targetScript.transform;
+        player = _player;
 
         isInit = true;
 
-        UpdateMarker();
+        UpdateDistance();
+        UpdateHitPoints();        
     }
 
-    public void UpdateMarker()
+    public void UpdateHitPoints()
     {
         float fillAmount;
         fillAmount = Mathf.Clamp01((float)targetScript.hitPointsCurrent/(float)targetScript.hitPointsMax);
         progressBar.FillAmount = fillAmount;
     }
+
+    public void UpdateDistance()
+    {
+        if (type == EnumUIMarkerType.Player)
+        {
+            return;
+        }
+
+        distance = Vector3.Distance(player.position, target.position);
+    }
     #endregion
 
-    #region Private methods
+    #region Private methods   
     private void DeleteMarker()
     {
         Destroy(gameObject);

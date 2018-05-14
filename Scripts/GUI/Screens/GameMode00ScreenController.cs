@@ -49,7 +49,7 @@ public class GameMode00ScreenController : ScreenController
         var markerPlayerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.ELEMENTS_UI, "MarkerObject"), markersPlace);
         var markerPlayerScr = markerPlayerObj.GetComponent<UIMarker>();
         markers.Add(markerPlayerScr);
-        markerPlayerScr.Initialize(sceneController.GetPlayer());
+        markerPlayerScr.Initialize(sceneController.GetPlayer(), player.transform, EnumUIMarkerType.Player);
 
         //Объекты
         var objects = sceneController.GetObjects();
@@ -58,7 +58,7 @@ public class GameMode00ScreenController : ScreenController
             var markerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.ELEMENTS_UI, "MarkerObject"), markersPlace);
             var markerScr = markerObj.GetComponent<UIMarker>();
             markers.Add(markerScr);
-            markerScr.Initialize(obj);
+            markerScr.Initialize(obj, player.transform);
         }
     }
 
@@ -74,7 +74,7 @@ public class GameMode00ScreenController : ScreenController
     private void UpdateAllMarkers()
     {
         foreach (var marker in markers)
-            marker.UpdateMarker();
+            marker.UpdateHitPoints();
     }
     #endregion
 
