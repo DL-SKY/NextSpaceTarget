@@ -1,9 +1,11 @@
 ﻿using DllSky.Managers;
+using DllSky.Classes;
 using DllSky.Patterns;
 using DllSky.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DllSky.Extensions;
 
 public class GameMode00SceneController : Singleton<GameMode00SceneController>
 {
@@ -137,8 +139,9 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
         var camera = Camera.main;
         camera.transform.SetParent(null);
 
-        for (int i = 0; i < space.childCount; i++)
-            Destroy(space.GetChild(i).gameObject);
+        /*for (int i = 0; i < space.childCount; i++)
+            Destroy(space.GetChild(i).gameObject);*/
+        space.DestroyChildren();
     }
 
     private void HandlerOnStartPlayerTurn()

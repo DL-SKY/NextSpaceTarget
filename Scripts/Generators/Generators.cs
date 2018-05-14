@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DllSky.Classes;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,91 +51,5 @@ public static class Generator
     #endregion
 
     #region Private methods    
-    #endregion
-}
-
-public class GeneratorData
-{
-    #region Length
-    private int lengthX;
-    private int lengthY;
-    private int lengthZ;
-
-    public int LengthX
-    {
-        get { return lengthX; }
-        set { lengthX = value; }
-    }
-    public int LengthY
-    {
-        get { return lengthY; }
-        set { lengthY = value; }
-    }
-    public int LengthZ
-    {
-        get { return lengthZ; }
-        set { lengthX = value; }
-    }
-    #endregion
-
-    #region Probabilities
-    private float percentBox;
-
-    public float PercentBox
-    {
-        get { return percentBox; }
-        set { percentBox = value; }
-    }
-    #endregion
-
-    #region Constructors
-    public GeneratorData(int _lengthX, int _lengthY, int _lengthZ, float _percentBox)
-    {
-        lengthX = _lengthX;
-        lengthY = _lengthY;
-        lengthZ = _lengthZ;
-
-        percentBox = _percentBox;
-    }
-    #endregion
-
-    #region Public methods
-    #endregion
-
-    #region Private methods
-    #endregion
-}
-
-public class Vector3Int
-{
-    #region Get/Set
-    public int X { get; set;}
-    public int Y { get; set; }
-    public int Z { get; set; }
-    #endregion
-
-    #region Constructors
-    public Vector3Int(int _x = 0, int _y = 0, int _z = 0)
-    {
-        X = _x;
-        Y = _y;
-        Z = _z;
-    }
-
-    public Vector3Int(Vector3 _vector3)
-    {
-        X = Mathf.RoundToInt(_vector3.x);
-        Y = Mathf.RoundToInt(_vector3.y);
-        Z = Mathf.RoundToInt(_vector3.z);
-    }
-    #endregion
-
-    #region Public methods
-    public void Set(int _x, int _y, int _z)
-    {
-        X = _x;
-        Y = _y;
-        Z = _z;
-    }
     #endregion
 }

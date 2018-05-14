@@ -1,4 +1,5 @@
-﻿using DllSky.Managers;
+﻿using DllSky.Extensions;
+using DllSky.Managers;
 using DllSky.Utility;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,8 +66,9 @@ public class GameMode00ScreenController : ScreenController
     {
         markers.Clear();
 
-        for (int i = markersPlace.childCount-1; i >= 0; i--)
-            Destroy(markersPlace.GetChild(i).gameObject);
+        /*for (int i = markersPlace.childCount-1; i >= 0; i--)
+            Destroy(markersPlace.GetChild(i).gameObject);*/
+        markersPlace.DestroyChildren();
     }
 
     private void UpdateAllMarkers()
