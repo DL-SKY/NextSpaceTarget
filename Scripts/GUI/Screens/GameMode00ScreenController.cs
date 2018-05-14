@@ -7,12 +7,25 @@ using UnityEngine;
 public class GameMode00ScreenController : ScreenController
 {
     #region Variables
+    [Header("Markers")]
     public Transform markersPlace;
+    private List<UIMarker> markers = new List<UIMarker>();
 
+    
     private GameMode00SceneController sceneController;
+    private SpaceObject player;
     #endregion
 
     #region Unity methods
+    private void OnEnable()
+    {
+        EventManager.eventOnChangeHitPoints += UpdateAllMarkers;
+    }
+
+    private void OnDisable()
+    {
+        EventManager.eventOnChangeHitPoints -= UpdateAllMarkers;
+    }
     #endregion
 
     #region Public methods
@@ -20,6 +33,7 @@ public class GameMode00ScreenController : ScreenController
     {
         base.Initialize(_data);
         sceneController = GameMode00SceneController.Instance;
+        player = sceneController.GetPlayer();
 
         StartCoroutine(Show());
     }
@@ -27,18 +41,38 @@ public class GameMode00ScreenController : ScreenController
 
     #region Private methods
     private void CreateUIMarkers()
-    {       
+    {
+        ClearAllMarkers();
+
         //Игрок
-        var markerPlayer = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.ELEMENTS_UI, "MarkerObject"), markersPlace);
-        markerPlayer.GetComponent<UIMarker>().Initialize(sceneController.GetPlayer());
+        var markerPlayerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.ELEMENTS_UI, "MarkerObject"), markersPlace);
+        var markerPlayerScr = markerPlayerObj.GetComponent<UIMarker>();
+        markers.Add(markerPlayerScr);
+        markerPlayerScr.Initialize(sceneController.GetPlayer());
 
         //Объекты
         var objects = sceneController.GetObjects();
         foreach (var obj in objects)
         {
-            var marker = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.ELEMENTS_UI, "MarkerObject"), markersPlace);
-            marker.GetComponent<UIMarker>().Initialize(obj);
+            var markerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.ELEMENTS_UI, "MarkerObject"), markersPlace);
+            var markerScr = markerObj.GetComponent<UIMarker>();
+            markers.Add(markerScr);
+            markerScr.Initialize(obj);
         }
+    }
+
+    private void ClearAllMarkers()
+    {
+        markers.Clear();
+
+        for (int i = markersPlace.childCount-1; i >= 0; i--)
+            Destroy(markersPlace.GetChild(i).gameObject);
+    }
+
+    private void UpdateAllMarkers()
+    {
+        foreach (var marker in markers)
+            marker.UpdateMarker();
     }
     #endregion
 
@@ -46,9 +80,6 @@ public class GameMode00ScreenController : ScreenController
     private IEnumerator Show()
     {
         CreateUIMarkers();
-        yield return null;
-        EventManager.CallOnChangeHitPoints();
-
         yield return SplashScreenManager.Instance.HideSplashScreen();
     }
     #endregion

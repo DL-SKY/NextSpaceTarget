@@ -154,11 +154,10 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
     #region Coroutines
     private IEnumerator Initialize()
     {
-        yield return null;
-        //-------------------------------      
-        
         //TODO: testing
         GenerateGameBoard();
+        //Кадр для применения настроек создаваемых объектов на сцене
+        yield return null;
         //------------------------------
         //isInit = true;
         ScreenManager.Instance.ShowScreen(ConstantsScreen.GAME_MODE_00);

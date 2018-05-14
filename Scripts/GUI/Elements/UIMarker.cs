@@ -23,16 +23,6 @@ public class UIMarker : MonoBehaviour
         camera = Camera.main;
     }
 
-    private void OnEnable()
-    {
-        EventManager.eventOnChangeHitPoints += UpdateMarker;
-    }
-
-    private void OnDisable()
-    {
-        EventManager.eventOnChangeHitPoints -= UpdateMarker;
-    }
-
     private void LateUpdate()
     {
         if (!isInit)
