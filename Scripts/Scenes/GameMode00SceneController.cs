@@ -121,9 +121,12 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
 
         //Инстанцируем Игрока
         var playerPosition = Generator.GeneratePlayerPosition(data);
-        x2 = playerPosition.X * (int)ConstantsGameSettings.CELL_SIZE;
-        y2 = playerPosition.Y * (int)ConstantsGameSettings.CELL_SIZE;
-        z2 = playerPosition.Z * (int)ConstantsGameSettings.CELL_SIZE;
+
+        //playerPosition = new DllSky.Classes.Vector3i();
+
+        x2 = playerPosition.x * (int)ConstantsGameSettings.CELL_SIZE;
+        y2 = playerPosition.y * (int)ConstantsGameSettings.CELL_SIZE;
+        z2 = playerPosition.z * (int)ConstantsGameSettings.CELL_SIZE;
         var playerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
         player = playerObj.GetComponent<SpaceObject>();
 
