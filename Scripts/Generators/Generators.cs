@@ -8,7 +8,7 @@ public static class Generator
     #endregion
 
     #region Public methods
-    public static int[,,] Generate(GeneratorData _data)
+    public static int[,,] GenerateGameBoard(GeneratorData _data)
     {
         int[,,] matrix = new int[_data.LengthX, _data.LengthY, _data.LengthZ];
 
@@ -27,12 +27,25 @@ public static class Generator
                         random = (float)EnumSpaceObject.Void;
 
                     matrix[x, y, z] = (int)random;
-                }
-
-        //Игрок
-        matrix[0, 0, 0] = (int)EnumSpaceObject.Player;
+                }        
 
         return matrix;
+    }
+
+    public static Vector3Int GeneratePlayerPosition(GeneratorData _data)
+    {
+        var result = new Vector3Int();
+
+        int halfX = _data.LengthX / 2;
+        int halfY = _data.LengthY / 2;
+        int beyondZ = (int)ConstantsGameSettings.BEYOND_BORDERS;
+
+        int playerX = Random.Range(halfX - 2, halfX + 3);
+        int playerY = Random.Range(halfY - 2, halfY + 3);
+        int playerZ = Random.Range(-Mathf.Max(beyondZ-2, 4), (int)-3);
+
+        result.Set(playerX, playerY, playerZ);
+        return result;
     }
     #endregion
 
@@ -74,7 +87,7 @@ public class GeneratorData
     }
     #endregion
 
-    #region Constructor
+    #region Constructors
     public GeneratorData(int _lengthX, int _lengthY, int _lengthZ, float _percentBox)
     {
         lengthX = _lengthX;
@@ -89,5 +102,39 @@ public class GeneratorData
     #endregion
 
     #region Private methods
+    #endregion
+}
+
+public class Vector3Int
+{
+    #region Get/Set
+    public int X { get; set;}
+    public int Y { get; set; }
+    public int Z { get; set; }
+    #endregion
+
+    #region Constructors
+    public Vector3Int(int _x = 0, int _y = 0, int _z = 0)
+    {
+        X = _x;
+        Y = _y;
+        Z = _z;
+    }
+
+    public Vector3Int(Vector3 _vector3)
+    {
+        X = Mathf.RoundToInt(_vector3.x);
+        Y = Mathf.RoundToInt(_vector3.y);
+        Z = Mathf.RoundToInt(_vector3.z);
+    }
+    #endregion
+
+    #region Public methods
+    public void Set(int _x, int _y, int _z)
+    {
+        X = _x;
+        Y = _y;
+        Z = _z;
+    }
     #endregion
 }

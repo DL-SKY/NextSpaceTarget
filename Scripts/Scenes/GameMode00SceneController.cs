@@ -92,7 +92,7 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
 
         //Генерируем матрицу
         GeneratorData data = new GeneratorData(lengthX, lengthY, lengthZ, percentBox);
-        var matrix = Generator.Generate(data);
+        var matrix = Generator.GenerateGameBoard(data);
 
         //Создаем Игровое Поле
         int x2, y2, z2;
@@ -115,13 +115,16 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
                             var boxObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACEOBJECTS, "Box01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
                             objects.Add(boxObj.GetComponent<SpaceObject>());
                             break;
-
-                        case (int)EnumSpaceObject.Player:
-                            var playerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
-                            player = playerObj.GetComponent<SpaceObject>();
-                            break;
                     }
                 }
+
+        //Инстанцируем Игрока
+        var playerPosition = Generator.GeneratePlayerPosition(data);
+        x2 = playerPosition.X * (int)ConstantsGameSettings.CELL_SIZE;
+        y2 = playerPosition.Y * (int)ConstantsGameSettings.CELL_SIZE;
+        z2 = playerPosition.Z * (int)ConstantsGameSettings.CELL_SIZE;
+        var playerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
+        player = playerObj.GetComponent<SpaceObject>();
 
         isInit = true;
     }
