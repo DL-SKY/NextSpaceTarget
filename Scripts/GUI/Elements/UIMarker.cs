@@ -76,7 +76,7 @@ public class UIMarker : MonoBehaviour
             return;
         }
 
-        distance = Vector3.Distance(player.position, target.position);
+        distance = Vector3.Distance(player.position, target.position) / ConstantsGameSettings.CELL_SIZE;
     }
     #endregion
 

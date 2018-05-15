@@ -65,9 +65,6 @@ public class GameMode00ScreenController : ScreenController
     private void ClearAllMarkers()
     {
         markers.Clear();
-
-        /*for (int i = markersPlace.childCount-1; i >= 0; i--)
-            Destroy(markersPlace.GetChild(i).gameObject);*/
         markersPlace.DestroyChildren();
     }
 

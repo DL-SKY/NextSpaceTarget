@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class Global : Singleton<Global>
 {
     #region Variables
@@ -136,7 +136,7 @@ public class Global : Singleton<Global>
 }
 
 // ================= SETTINGS ================= \\
-[System.Serializable]
+[Serializable]
 public class GameSettings
 {
     public string version;
@@ -151,7 +151,7 @@ public class GameSettings
 }
 
 // ================= PROFILE ================= \\
-[System.Serializable]
+[Serializable]
 public class Profile
 {
     public Dictionary<string, int> Items;    
@@ -159,7 +159,7 @@ public class Profile
 
 // ================= CONFIGS ================= \\
 // Сам класс конфига + ниже классы 
-[System.Serializable]
+[Serializable]
 public class Configs
 {
     //Таблицы из конфига (лучше сохранить последовательность)
@@ -177,14 +177,14 @@ public class Configs
     public List<EnemiesConfig> enemies = new List<EnemiesConfig>();    
 }
 
-[System.Serializable]
+[Serializable]
 public class SettingsConfig
 {
     public string id;
     public string value;
 }
 
-[System.Serializable]
+[Serializable]
 public class LocalizationConfig
 {
     public string id;
@@ -192,14 +192,14 @@ public class LocalizationConfig
     public string eng;
 }
 
-[System.Serializable]
+[Serializable]
 public class ColorsConfig
 {
     public string id;
     public string color;
 }
 
-[System.Serializable]
+[Serializable]
 public class RarityConfig
 {
     public string id;
@@ -210,7 +210,7 @@ public class RarityConfig
     public string color2;
 }
 
-[System.Serializable]
+[Serializable]
 public class SkillsConfig
 {
     public string id;
@@ -220,7 +220,7 @@ public class SkillsConfig
     public string type;
 }
 
-[System.Serializable]
+[Serializable]
 public class LevelSpaceshipConfig
 {
     public int level;
@@ -228,7 +228,7 @@ public class LevelSpaceshipConfig
     public string priceToNextLvl;
 }
 
-[System.Serializable]
+[Serializable]
 public class LevelEquipmentConfig
 {
     public int level;
@@ -236,7 +236,7 @@ public class LevelEquipmentConfig
     public string priceToNextLvl;
 }
 
-[System.Serializable]
+[Serializable]
 public class ResourcesConfig
 {
     public string id;
@@ -248,14 +248,15 @@ public class ResourcesConfig
     public string background;
 }
 
-[System.Serializable]
+[Serializable]
 public class SpaceshipsConfig
 {
     public string id;
     public string name;
     public string description;
     public int level;
-    public float hp;
+    public float hitPoints;
+    public float shieldPoints;
     public float bonusWeapon;
     public float cooldown;
     public int repairTime;
@@ -268,7 +269,7 @@ public class SpaceshipsConfig
     public string[] skills;
 }
 
-[System.Serializable]
+[Serializable]
 public class EquipmentsConfig
 {
     public string id;
@@ -289,7 +290,7 @@ public class EquipmentsConfig
     public string skill;
 }
 
-[System.Serializable]
+[Serializable]
 public class AmmoConfig
 {
     public string id;
@@ -297,7 +298,7 @@ public class AmmoConfig
     public string description;
 }
 
-[System.Serializable]
+[Serializable]
 public class EnemiesConfig
 {
     public string id;

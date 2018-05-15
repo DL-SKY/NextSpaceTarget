@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -149,6 +150,13 @@ public static class ExtensionGlobal
     {
         _cg.levelSpaceship = _cg.levelSpaceship.OrderBy(x => x.level).ToList();
         _cg.levelEquipment = _cg.levelEquipment.OrderBy(x => x.level).ToList();
+    }
+    #endregion
+
+    #region SpaceshipsConfig
+    public static SpaceshipsConfig GetConfig(this List<SpaceshipsConfig> _confs, string _id)
+    {
+        return _confs.Find(x => x.id == _id);
     }
     #endregion
 }

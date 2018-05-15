@@ -121,9 +121,6 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
 
         //Инстанцируем Игрока
         var playerPosition = Generator.GeneratePlayerPosition(data);
-
-        //playerPosition = new DllSky.Classes.Vector3i();
-
         x2 = playerPosition.x * (int)ConstantsGameSettings.CELL_SIZE;
         y2 = playerPosition.y * (int)ConstantsGameSettings.CELL_SIZE;
         z2 = playerPosition.z * (int)ConstantsGameSettings.CELL_SIZE;
@@ -141,8 +138,6 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
         var camera = Camera.main;
         camera.transform.SetParent(null);
 
-        /*for (int i = 0; i < space.childCount; i++)
-            Destroy(space.GetChild(i).gameObject);*/
         space.DestroyChildren();
     }
 
