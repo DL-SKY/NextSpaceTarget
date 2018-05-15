@@ -11,6 +11,7 @@
  * public static string GetStringFormatAmount6(int _amount)
 */
 
+using DllSky.Extensions;
 using System.Collections;
 using System.Security.Cryptography;							//MD5
 using System.Text;                                          //Encoding
@@ -110,7 +111,7 @@ namespace DllSky.Utility
 
         private static string ToStringFormatAmount(int _amount, int _format)
         {
-            int divider = (int)Mathf.Pow(10,_format);
+            int divider = Mathf.Pow(10,_format).ToInt();
             int amount = _amount;
             string result = "";
 

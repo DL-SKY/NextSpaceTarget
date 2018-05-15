@@ -61,7 +61,7 @@ public class SpaceObject : MonoBehaviour
     #endregion
 
     #region Public methods: Initialization
-    virtual public void Initialize()
+    virtual public void Initialize(object data = null)
     {
         gameModeController = GameMode00SceneController.Instance;
 

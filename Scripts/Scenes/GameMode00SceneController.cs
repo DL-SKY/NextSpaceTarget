@@ -101,9 +101,9 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
             for (int y = 0; y < lengthY; y++)
                 for (int z = 0; z < lengthZ; z++)
                 {
-                    x2 = x * (int)ConstantsGameSettings.CELL_SIZE;
-                    y2 = y * (int)ConstantsGameSettings.CELL_SIZE;
-                    z2 = z * (int)ConstantsGameSettings.CELL_SIZE;
+                    x2 = x * ConstantsGameSettings.CELL_SIZE.ToInt();
+                    y2 = y * ConstantsGameSettings.CELL_SIZE.ToInt();
+                    z2 = z * ConstantsGameSettings.CELL_SIZE.ToInt();
 
                     countVoxels++;
                     switch (matrix[x, y, z])
@@ -121,9 +121,9 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
 
         //Инстанцируем Игрока
         var playerPosition = Generator.GeneratePlayerPosition(data);
-        x2 = playerPosition.x * (int)ConstantsGameSettings.CELL_SIZE;
-        y2 = playerPosition.y * (int)ConstantsGameSettings.CELL_SIZE;
-        z2 = playerPosition.z * (int)ConstantsGameSettings.CELL_SIZE;
+        x2 = playerPosition.x * ConstantsGameSettings.CELL_SIZE.ToInt();
+        y2 = playerPosition.y * ConstantsGameSettings.CELL_SIZE.ToInt();
+        z2 = playerPosition.z * ConstantsGameSettings.CELL_SIZE.ToInt();
         var playerObj = Instantiate(ResourcesManager.LoadPrefab(ConstantsResourcesPath.SPACESHIPS, "SpaceShip01"), new Vector3(x2, y2, z2), Quaternion.identity, space);
         player = playerObj.GetComponent<SpaceObject>();
 

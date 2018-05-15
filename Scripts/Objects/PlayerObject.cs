@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerObject : SpaceObject
+public class PlayerObject : SpaceshipObject
 {
     #region Variables
     #endregion
@@ -10,7 +10,8 @@ public class PlayerObject : SpaceObject
     #region Unity methods
     private void Start()
     {
-        Initialize();
+        //TODO:
+        (this as SpaceObject).Initialize();
     }
     #endregion
 

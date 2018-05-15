@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using DllSky.Extensions;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public static class Generator
                     else
                         random = (float)EnumSpaceObject.Void;
 
-                    matrix[x, y, z] = (int)random;
+                    matrix[x, y, z] = random.ToInt();
                 }        
 
         return matrix;
@@ -38,7 +39,7 @@ public static class Generator
 
         int halfX = _data.LengthX / 2;
         int halfY = _data.LengthY / 2;
-        int beyondZ = (int)ConstantsGameSettings.BEYOND_BORDERS;
+        int beyondZ = ConstantsGameSettings.BEYOND_BORDERS.ToInt();
 
         int playerX = Random.Range(halfX - 2, halfX + 3);
         int playerY = Random.Range(halfY - 2, halfY + 3);

@@ -10,7 +10,7 @@ public static class ExtensionGlobal
     public static GameSettings LoadSettings()
     {
         var startTime = DateTime.UtcNow;
-        string settingsPath = System.IO.Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_SETTINGS);
+        string settingsPath = Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_SETTINGS);
         Debug.Log("[GLOBAL.SETTINGS] Starting load settings: " + settingsPath);        
 
         if (File.Exists(settingsPath + ".json"))
@@ -37,7 +37,7 @@ public static class ExtensionGlobal
     public static void SaveSettings(this GameSettings _gs)
     {
         var startTime = DateTime.UtcNow;
-        string settingsPath = System.IO.Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_SETTINGS);
+        string settingsPath = Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_SETTINGS);
         Debug.Log("[GLOBAL.SETTINGS] Starting save settings: " + settingsPath);
         
         string json = JsonUtility.ToJson((GameSettings)_gs, true);
@@ -89,7 +89,7 @@ public static class ExtensionGlobal
     public static Profile LoadProfile()
     {
         var startTime = DateTime.UtcNow;
-        string profilePath = System.IO.Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_PROFILE);
+        string profilePath = Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_PROFILE);
         Debug.Log("[GLOBAL.PROFILE] Starting load profile: " + profilePath);        
 
         if (File.Exists(profilePath + ".json"))
@@ -116,7 +116,7 @@ public static class ExtensionGlobal
     public static void SaveProfile(this Profile _pr)
     {
         var startTime = DateTime.UtcNow;
-        string profilePath = System.IO.Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_PROFILE);
+        string profilePath = Path.Combine(Application.persistentDataPath, ConstantsResourcesPath.FILE_PROFILE);
         Debug.Log("[GLOBAL.PROFILE] Starting save profile: " + profilePath);
         
         string json = JsonUtility.ToJson((Profile)_pr, true);
@@ -157,6 +157,31 @@ public static class ExtensionGlobal
     public static SpaceshipsConfig GetConfig(this List<SpaceshipsConfig> _confs, string _id)
     {
         return _confs.Find(x => x.id == _id);
+    }
+
+    public static void Copy(this SpaceshipsConfig _cg1, SpaceshipsConfig _cg2)
+    {
+        _cg1.id = _cg2.id;
+        _cg1.name = _cg2.name;
+        _cg1.description = _cg2.description;
+        _cg1.level = _cg2.level;
+        _cg1.hitPoints = _cg2.hitPoints;
+        _cg1.shieldPoints = _cg2.shieldPoints;
+        _cg1.bonusWeapon = _cg2.bonusWeapon;
+        _cg1.cooldown = _cg2.cooldown;
+        _cg1.repairTime = _cg2.repairTime;
+        _cg1.coefLvlHP = _cg2.coefLvlHP;
+        _cg1.coefLvlBonus = _cg2.coefLvlBonus;
+        _cg1.coefLvlTaran = _cg2.coefLvlTaran;
+        _cg1.coefLvlCooldown = _cg2.coefLvlCooldown;
+        _cg1.coefLvlRepair = _cg2.coefLvlRepair;
+        _cg1.coefPriceLvl = _cg2.coefPriceLvl;
+        _cg1.skills = _cg2.skills;
+    }
+
+    public static void SpaceshipsConfig(this SpaceshipsConfig _cg1, SpaceshipsConfig _cg2)
+    {
+        _cg1.Copy(_cg2);
     }
     #endregion
 }
