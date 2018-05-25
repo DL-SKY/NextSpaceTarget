@@ -20,11 +20,16 @@ public class GameMode00ScreenController : ScreenController
     #region Unity methods
     private void OnEnable()
     {
+        EventManager.eventOnClickEsc += OnClickEsc;
         EventManager.eventOnChangeHitPoints += UpdateAllMarkers;
+
+        if (IsInit)
+            StartCoroutine(Show());
     }
 
     private void OnDisable()
     {
+        EventManager.eventOnClickEsc -= OnClickEsc;
         EventManager.eventOnChangeHitPoints -= UpdateAllMarkers;
     }
     #endregion
@@ -32,11 +37,68 @@ public class GameMode00ScreenController : ScreenController
     #region Public methods
     public override void Initialize(object _data)
     {
-        base.Initialize(_data);
-        sceneController = GameMode00SceneController.Instance;
-        player = sceneController.GetPlayer();
+        base.Initialize(_data);        
 
         StartCoroutine(Show());
+    }
+
+    public void OnClickEsc()
+    {
+        StartCoroutine(CloseCoroutine());
+    }
+
+    public void OnClickToForward()
+    {
+        player.ToForward();
+    }
+
+    public void OnClickToLeft()
+    {
+        player.ToLeft();
+    }
+
+    public void OnClickToRight()
+    {
+        player.ToRight();
+    }
+
+    public void OnClickToTop()
+    {
+        player.ToTop();
+    }
+
+    public void OnClickToBottom()
+    {
+        player.ToBottom();
+    }
+
+    public void OnClickToPitchUp()
+    {
+
+    }
+
+    public void OnClickToPitchDown()
+    {
+
+    }
+
+    public void OnClickToYawLeft()
+    {
+
+    }
+    public void OnClickToYawRight()
+    {
+
+    }
+
+    public void OnClickToRollLeft()
+    {
+        player.ToRollLeft();
+    }
+
+    public void OnClickToRollRight()
+    {
+        player.ToRollRight();
     }
     #endregion
 
@@ -78,8 +140,23 @@ public class GameMode00ScreenController : ScreenController
     #region Coroutines
     private IEnumerator Show()
     {
+        yield return MyGameManager.Instance.LoadSceneCoroutine(ConstantsScene.GAME_MODE_00);
+        while (!GameMode00SceneController.Instance.isInit)
+        {
+            yield return null;
+        }
+        sceneController = GameMode00SceneController.Instance;
+        player = sceneController.GetPlayer();
+
         CreateUIMarkers();
         yield return SplashScreenManager.Instance.HideSplashScreen();
+    }
+
+    private IEnumerator CloseCoroutine()
+    {
+        yield return SplashScreenManager.Instance.ShowBlack();
+
+        Close();
     }
     #endregion
 }

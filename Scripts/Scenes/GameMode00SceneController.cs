@@ -163,7 +163,7 @@ public class GameMode00SceneController : Singleton<GameMode00SceneController>
         yield return null;
         //------------------------------
         //isInit = true;
-        ScreenManager.Instance.ShowScreen(ConstantsScreen.GAME_MODE_00);
+        //ScreenManager.Instance.ShowScreen(ConstantsScreen.GAME_MODE_00);
     }
 
     private IEnumerator StartAITurn()

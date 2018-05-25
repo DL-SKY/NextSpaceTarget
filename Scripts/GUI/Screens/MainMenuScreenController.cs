@@ -8,6 +8,11 @@ public class MainMenuScreenController : ScreenController
     #endregion
 
     #region Unity methods
+    private void OnEnable()
+    {
+        if (IsInit)
+            StartCoroutine(Show());
+    }
     #endregion
 
     #region Buttons method
@@ -37,6 +42,8 @@ public class MainMenuScreenController : ScreenController
     #region Coroutines
     private IEnumerator Show()
     {
+        yield return MyGameManager.Instance.LoadSceneCoroutine(ConstantsScene.MAIN_MENU);
+
         yield return SplashScreenManager.Instance.HideSplashScreen();
         yield return null;
     }
@@ -53,7 +60,8 @@ public class MainMenuScreenController : ScreenController
         yield return SplashScreenManager.Instance.ShowBlack();
         //yield return new WaitForSeconds(2.5f);
 
-        MyGameManager.Instance.LoadScene(ConstantsScene.GAME_MODE_00);
+        //MyGameManager.Instance.LoadScene(ConstantsScene.GAME_MODE_00);
+        ScreenManager.Instance.ShowScreen(ConstantsScreen.GAME_MODE_00);
     }
     #endregion
 }

@@ -30,7 +30,7 @@ public class MainMenuSceneController : Singleton<MainMenuSceneController>
         //-------------------------------
         //TODO: testing
         //------------------------------
-        ScreenManager.Instance.ShowScreen(ConstantsScreen.MAIN_MENU);
+        //ScreenManager.Instance.ShowScreen(ConstantsScreen.MAIN_MENU);
     }
     #endregion
 }

@@ -21,10 +21,17 @@ public class SpaceshipObject : SpaceObject
     #region Public methods
     public override void Initialize(object _data)
     {
-        data = _data as SpaceshipData;
+        if (_data != null)
+        {
+            data = _data as SpaceshipData;
 
-        hitPointsMax = data.hitPoints.ToInt();
-        shieldPointsMax = data.shieldPoints.ToInt();
+            hitPointsMax = data.hitPoints.ToInt();
+            shieldPointsMax = data.shieldPoints.ToInt();
+        }
+        else
+        {
+            data = new SpaceshipData(Global.Instance.CONFIGS.spaceships[0]);
+        }
 
         base.Initialize();
     }

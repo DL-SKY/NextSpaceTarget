@@ -32,6 +32,9 @@ public class ScreenController : MonoBehaviour
     {
         isOpened = false;
 
+        ScreenManager.Instance.CloseScreen(this);
+
+        Destroy(gameObject);
     }
     #endregion
 

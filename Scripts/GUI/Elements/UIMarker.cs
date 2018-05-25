@@ -40,7 +40,7 @@ public class UIMarker : MonoBehaviour
             return;
         }
 
-        selfTransform.position = camera.WorldToScreenPoint(target.position);
+        selfTransform.position = camera.WorldToScreenPoint(target.position + camera.transform.up*0.2f);
         transform.localScale = (targetScript.inCamera == true && targetScript.IsVisible) ? Vector3.one : Vector3.zero;
 
         UpdateDistance();

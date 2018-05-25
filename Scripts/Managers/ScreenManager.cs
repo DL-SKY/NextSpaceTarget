@@ -1,4 +1,5 @@
-﻿using DllSky.Patterns;
+﻿using DllSky.Managers;
+using DllSky.Patterns;
 using DllSky.Utility;
 using System;
 using System.Collections;
@@ -35,6 +36,8 @@ public class ScreenManager : Singleton<ScreenManager>
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             Debug.Log("[ScreenManager] " + KeyCode.Escape);
+
+            EventManager.CallOnClickEsc();
 
             if (dialogs.Count > 0)
                 dialogs[dialogs.Count - 1].Close(false);
@@ -91,6 +94,14 @@ public class ScreenManager : Singleton<ScreenManager>
 
         return screen;
         */
+    }
+
+    public void CloseScreen(ScreenController _screen)
+    {
+        screens.Remove(_screen);
+
+        screens[screens.Count - 1].transform.SetAsLastSibling();
+        screens[screens.Count - 1].gameObject.SetActive(true);
     }
 
     public DialogController ShowDialog(string _name)

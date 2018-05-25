@@ -52,9 +52,13 @@ public class MyGameManager : Singleton<MyGameManager>
 
         //yield return SceneManager.LoadSceneAsync(ConstantsScene.MAIN_MENU, LoadSceneMode.Additive);
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName(ConstantsScene.MAIN_MENU));
-        LoadScene(ConstantsScene.MAIN_MENU);
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //LoadScene(ConstantsScene.MAIN_MENU);
+        ScreenManager.Instance.ShowScreen(ConstantsScreen.MAIN_MENU);
+
         //while (!MainMenuSceneController.Instance.isInit)
-            //yield return null;
+        //yield return null;
 
         //yield return SplashScreenManager.Instance.HideSplashScreenImmediately();
         //-------------------
@@ -80,7 +84,7 @@ public class MyGameManager : Singleton<MyGameManager>
 
     }
 
-    private IEnumerator LoadSceneCoroutine(string _scene, LoadSceneMode _mode)
+    public IEnumerator LoadSceneCoroutine(string _scene, LoadSceneMode _mode = LoadSceneMode.Additive)
     {
         //Выгружаем предыдущую сцену
         if (SceneManager.sceneCount > 1)

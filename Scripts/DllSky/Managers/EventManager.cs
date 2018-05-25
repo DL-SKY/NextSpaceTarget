@@ -12,6 +12,7 @@ namespace DllSky.Managers
     {
         #region Delegates
         public delegate void OnDefault();
+        public delegate void OnClickEsc();
 
         public delegate void OnChangeLanguage();
         public delegate void OnApplyLanguage();
@@ -24,6 +25,7 @@ namespace DllSky.Managers
 
         #region Actions
         public static event OnDefault eventOnDefault;
+        public static event OnClickEsc eventOnClickEsc;
 
         public static event OnChangeLanguage eventOnChangeLanguage;
         public static event OnApplyLanguage eventOnApplyLanguage;
@@ -39,6 +41,12 @@ namespace DllSky.Managers
         {
             if (eventOnDefault != null)
                 eventOnDefault.Invoke();
+        }
+
+        public static void CallOnClickEsc()
+        {
+            if (eventOnClickEsc != null)
+                eventOnClickEsc.Invoke();
         }
 
         public static void CallOnChangeLanguage()
