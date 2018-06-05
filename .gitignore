@@ -6,6 +6,7 @@
 /Scripts/bin/*
 /Scripts/obj
 /Scripts/obj/*
-*.csproj
-*.csproj.user
-*.sln
+
+#*.csproj
+#*.csproj.user
+#*.sln

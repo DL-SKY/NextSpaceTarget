@@ -37,9 +37,9 @@ public class SpaceshipObject : SpaceObject
         base.Initialize();
 
         skills.Clear();
-        for (int i = 0; i < data.Skills.Length; i++)
+        for (int i = 0; i < data.skills.Length; i++)
         {
-            var newSkill = new Skill(data.Skills[i]);
+            var newSkill = new Skill(data.skills[i]);
             skills.Add(newSkill);
         }
     }

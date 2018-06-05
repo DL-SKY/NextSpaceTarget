@@ -19,7 +19,7 @@ public class Skill
     {
         switch (id)
         {
-            case ConsttantsSkill.NA:
+            case ConstantsSkill.NA:
                 break;
             //case default:
                 //return;
