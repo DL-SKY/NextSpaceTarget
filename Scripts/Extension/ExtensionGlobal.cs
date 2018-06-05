@@ -153,6 +153,27 @@ public static class ExtensionGlobal
     }
     #endregion
 
+    #region SkillsConfig
+    public static SkillsConfig GetConfig(this List<SkillsConfig> _confs, string _id)
+    {
+        return _confs.Find(x => x.id == _id);
+    }
+
+    public static void Copy(this SkillsConfig _cg1, SkillsConfig _cg2)
+    {
+        _cg1.id = _cg2.id;
+        _cg1.name = _cg2.name;
+        _cg1.description = _cg2.description;
+        _cg1.minLevel = _cg2.minLevel;
+        _cg1.type = _cg2.type;
+    }
+
+    public static void SkillsConfig(this SkillsConfig _cg1, SkillsConfig _cg2)
+    {
+        _cg1.Copy(_cg2);
+    }
+    #endregion
+
     #region SpaceshipsConfig
     public static SpaceshipsConfig GetConfig(this List<SpaceshipsConfig> _confs, string _id)
     {

@@ -1,15 +1,14 @@
 
 
-public class SpaceshipData : SpaceshipsConfig
+public class SkillData : SkillsConfig
 {
     #region Variables
-    public bool isPlayer;
 
-    private SpaceshipsConfig config;
+    private SkillsConfig config;
     #endregion
 
     #region Constructors
-    public SpaceshipData(SpaceshipsConfig _currentData)
+    public SkillData(SkillsConfig _currentData)
     {
         this.Copy(_currentData);
         SetConfig();
@@ -17,21 +16,21 @@ public class SpaceshipData : SpaceshipsConfig
     #endregion
 
     #region Public methods
-    public SpaceshipsConfig GetConfig()
+    public SkillsConfig GetConfig()
     {
         return config;
     }
 
     public void SetConfig(string _id)
     {
-        config = Global.Instance.CONFIGS.spaceships.GetConfig(_id);
+        config = Global.Instance.CONFIGS.skills.GetConfig(_id);
     }
     #endregion
 
     #region Private methods
     private void SetConfig()
     {
-        config = Global.Instance.CONFIGS.spaceships.GetConfig(id);
-    }
+        config = Global.Instance.CONFIGS.skills.GetConfig(id);
+    }    
     #endregion
 }
