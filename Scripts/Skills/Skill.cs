@@ -1,6 +1,7 @@
 public class Skill
 {
     #region Variables
+    public string id;
 
     private SkillData data;
     #endregion
@@ -8,6 +9,7 @@ public class Skill
     #region Constructor
     public Skill(string _skillID)
     {
+        id = _skillID;
         data = new SkillData( Global.Instance.CONFIGS.skills.GetConfig(id) );
     }
     #endregion

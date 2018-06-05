@@ -8,6 +8,7 @@ public class SpaceshipObject : SpaceObject
     #region Variables
 
     private SpaceshipData data;
+    private List<Skill> skills = new List<Skill>();
     #endregion
 
     #region Unity methods
@@ -34,6 +35,12 @@ public class SpaceshipObject : SpaceObject
         }
 
         base.Initialize();
+
+        for (int i = 0; i < data.Skills; i++)
+        {
+            skills.Add();
+        }
+
     }
 
     public SpaceshipData GetData()
