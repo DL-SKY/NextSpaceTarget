@@ -15,8 +15,19 @@ public class Skill
     #endregion
 
     #region Public methods
+    public void Apply()
+    {
+        switch (id)
+        {
+            case ConsttantsSkill.NA:
+                break;
+            //case default:
+                //return;
+        }
+    }
     #endregion
 
     #region Private methods
+
     #endregion
 }

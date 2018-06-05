@@ -64,6 +64,11 @@ public static class ConstantsColor
     public const string LIGHT_KRAOLA = "light_kraola";
 }
 
+public static class ConstantsSkill
+{
+    public const string NA = "NA";
+}
+
 public static class ConstantsLanguage
 {
     public const string RUSSIAN = "rus";
