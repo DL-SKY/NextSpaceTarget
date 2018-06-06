@@ -68,6 +68,7 @@ public static class ConstantsSkill
 {
     public const string NA = "NA";
     public const string SPECIAL_TARAN = "special_taran";
+    public const string SPECIAL_MANEUVER = "special_maneuver";
 }
 
 public static class ConstantsLanguage

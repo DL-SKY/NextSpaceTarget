@@ -218,6 +218,8 @@ public class SkillsConfig
     public string description;
     public int minLevel;
     public string type;
+    public float bonus;
+    public float coefLvlBonus;
 }
 
 [Serializable]
@@ -257,13 +259,10 @@ public class SpaceshipsConfig
     public int level;
     public float hitPoints;
     public float shieldPoints;
-    public float bonusWeapon;
-    public float cooldown;
+    public float maneuver;
     public int repairTime;
     public float coefLvlHP;
-    public float coefLvlBonus;
-    public float coefLvlTaran;
-    public float coefLvlCooldown;
+    public float coefLvlManeuver;
     public float coefLvlRepair;
     public float coefPriceLvl;
     public string[] skills;

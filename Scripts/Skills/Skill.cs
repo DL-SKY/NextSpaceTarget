@@ -13,7 +13,7 @@ public class Skill
     public Skill(string _skillID)
     {
         id = _skillID;
-        data = new SkillData( Global.Instance.CONFIGS.skills.GetConfig(id) );
+        data = new SkillData(id);
 
         type = (EnumSkillType)Enum.Parse(typeof(EnumSkillType), data.type);
     }
@@ -21,18 +21,11 @@ public class Skill
 
     #region Public methods
     //Возвращает величину воздействия скилла в числовом эквиваленте
-    public float Apply(float _arg)
+    public float GetBonus(float _arg, int _lvl)
     {
-        float result = 0.0f;
-
-        switch (id)
-        {
-            case ConstantsSkill.NA:
-                result = 0.0f;
-                break;
-            case default:
-                return 0.0f;
-        }
+        int deltaLevel = _lvl - data.minLevel;
+        float percent = data.bonus * (deltaLevel * data.coefLvlBonus);
+        float result = _arg * percent;
 
         return result;
     }

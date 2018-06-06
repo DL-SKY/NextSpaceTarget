@@ -166,6 +166,8 @@ public static class ExtensionGlobal
         _cg1.description = _cg2.description;
         _cg1.minLevel = _cg2.minLevel;
         _cg1.type = _cg2.type;
+        _cg1.bonus = _cg2.bonus;
+        _cg1.coefLvlBonus = _cg2.coefLvlBonus;
     }
 
     public static void SkillsConfig(this SkillsConfig _cg1, SkillsConfig _cg2)
@@ -188,16 +190,13 @@ public static class ExtensionGlobal
         _cg1.level = _cg2.level;
         _cg1.hitPoints = _cg2.hitPoints;
         _cg1.shieldPoints = _cg2.shieldPoints;
-        _cg1.bonusWeapon = _cg2.bonusWeapon;
-        _cg1.cooldown = _cg2.cooldown;
+        _cg1.maneuver = _cg2.maneuver;
         _cg1.repairTime = _cg2.repairTime;
         _cg1.coefLvlHP = _cg2.coefLvlHP;
-        _cg1.coefLvlBonus = _cg2.coefLvlBonus;
-        _cg1.coefLvlTaran = _cg2.coefLvlTaran;
-        _cg1.coefLvlCooldown = _cg2.coefLvlCooldown;
+        _cg1.coefLvlManeuver = _cg2.coefLvlManeuver;
         _cg1.coefLvlRepair = _cg2.coefLvlRepair;
         _cg1.coefPriceLvl = _cg2.coefPriceLvl;
-        _cg1.skills = _cg2.skills;
+        _cg1.skills = (string[])_cg2.skills.Clone();
     }
 
     public static void SpaceshipsConfig(this SpaceshipsConfig _cg1, SpaceshipsConfig _cg2)

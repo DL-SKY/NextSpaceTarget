@@ -31,17 +31,19 @@ public class SpaceshipObject : SpaceObject
         }
         else
         {
-            data = new SpaceshipData(Global.Instance.CONFIGS.spaceships[0]);
+            data = new SpaceshipData(Global.Instance.CONFIGS.spaceships[0].id);
         }
 
         base.Initialize();
 
+        //Skills
         skills.Clear();
         for (int i = 0; i < data.skills.Length; i++)
         {
             var newSkill = new Skill(data.skills[i]);
             skills.Add(newSkill);
         }
+        ApplySkills();
     }
 
     public SpaceshipData GetData()
@@ -51,11 +53,18 @@ public class SpaceshipObject : SpaceObject
     #endregion
 
     #region Private methods
-    private void AllpySkills()
+    private void ApplySkills()
     {
         for (int i = 0; i < skills.Count; i++)
         {
-
+            switch (skills[i].id)
+            {
+                case ConstantsSkill.NA:
+                    break;
+                case ConstantsSkill.SPECIAL_MANEUVER:
+                    data.maneuver += skills[i].GetBonus(data.maneuver, data.level);
+                    break;
+            }
         }
     }
     #endregion

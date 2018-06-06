@@ -8,10 +8,16 @@ public class SkillData : SkillsConfig
     #endregion
 
     #region Constructors
-    public SkillData(SkillsConfig _currentData)
+    /*public SkillData(SkillsConfig _currentData)
     {
         this.Copy(_currentData);
         SetConfig();
+    }*/
+
+    public SkillData(string _id)
+    {
+        SetConfig(_id);
+        this.Copy(config);        
     }
     #endregion
 
@@ -19,18 +25,18 @@ public class SkillData : SkillsConfig
     public SkillsConfig GetConfig()
     {
         return config;
-    }
-
-    public void SetConfig(string _id)
-    {
-        config = Global.Instance.CONFIGS.skills.GetConfig(_id);
-    }
+    }    
     #endregion
 
     #region Private methods
     private void SetConfig()
     {
         config = Global.Instance.CONFIGS.skills.GetConfig(id);
-    }    
+    }
+
+    private void SetConfig(string _id)
+    {
+        config = Global.Instance.CONFIGS.skills.GetConfig(_id);
+    }
     #endregion
 }
