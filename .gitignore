@@ -10,3 +10,9 @@
 #*.csproj
 #*.csproj.user
 #*.sln
+/VS/.vs
+/VS/.vs/*
+/VS/Assets
+/VS/Assets/*
+/VS/Temp
+/VS/Temp/*
