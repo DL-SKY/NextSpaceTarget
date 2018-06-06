@@ -67,6 +67,7 @@ public static class ConstantsColor
 public static class ConstantsSkill
 {
     public const string NA = "NA";
+    public const string SPECIAL_TARAN = "special_taran";
 }
 
 public static class ConstantsLanguage
@@ -86,6 +87,16 @@ public enum EnumSpaceObject
     Player = 100,
 }
 
+//Типы скиллов
+public enum EnumSkillType
+{
+    NA = 0,
+    Active = 1,
+    Passive = 2,
+    Weapon = 3,
+}
+
+//Тип таргет-маркера на экране
 public enum EnumUIMarkerType
 {
     Default = 0,

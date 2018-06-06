@@ -51,6 +51,13 @@ public class SpaceshipObject : SpaceObject
     #endregion
 
     #region Private methods
+    private void AllpySkills()
+    {
+        for (int i = 0; i < skills.Count; i++)
+        {
+
+        }
+    }
     #endregion
 
     #region Coroutines
