@@ -237,10 +237,8 @@ public class RarityConfig
 [Serializable]
 public class SkillsConfig
 {
-    public SkillsConfig(SkillsConfig _cg2)
-    {
-        this.Copy(_cg2);
-    }
+    public SkillsConfig() { ; }
+    public SkillsConfig(SkillsConfig _cg2) { this.Copy(_cg2); }
 
     public string id;
     public string name;
@@ -282,10 +280,8 @@ public class ResourcesConfig
 [Serializable]
 public class SpaceshipsConfig
 {
-    public SpaceshipsConfig(SpaceshipsConfig _cg2)
-    {
-        this.Copy(_cg2);
-    }
+    public SpaceshipsConfig() { ; }
+    public SpaceshipsConfig(SpaceshipsConfig _cg2) { this.Copy(_cg2); }
 
     public string id;
     public string name;
@@ -305,10 +301,8 @@ public class SpaceshipsConfig
 [Serializable]
 public class EquipmentsConfig
 {
-    public EquipmentsConfig(EquipmentsConfig _cg2)
-    {
-        this.Copy(_cg2);
-    }
+    public EquipmentsConfig() { ; }
+    public EquipmentsConfig(EquipmentsConfig _cg2) { this.Copy(_cg2); }
 
     public string id;
     public string name;
