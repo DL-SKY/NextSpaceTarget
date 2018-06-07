@@ -9,10 +9,10 @@ public class Equipment
     #endregion
 
     #region Constructors
-    public Equipment(string _id)
+    public Equipment(string _id, int _lvl)
     {
         id = _id;
-        data = new EquipmentData(id);
+        data = new EquipmentData(id, _lvl);
 
         var res = Global.Instance.CONFIGS.resources.Find(x => x.id == id);
         if (res != null)

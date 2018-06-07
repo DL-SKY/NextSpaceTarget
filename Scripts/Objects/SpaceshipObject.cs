@@ -48,7 +48,7 @@ public class SpaceshipObject : SpaceObject
         if (data.equipments != null)
             for (int i = 0; i < data.equipments.Count; i++)
             {
-                var newEquipment = new Equipment(data.equipments[i]);
+                var newEquipment = new Equipment(data.equipments[i], 1);
                 equipments.Add(newEquipment);
             }
 
