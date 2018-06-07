@@ -154,7 +154,24 @@ public class GameSettings
 [Serializable]
 public class Profile
 {
-    public Dictionary<string, int> Items;    
+    public List<StorageItem> storage = new List<StorageItem>();
+    public List<SpaceshipItem> spaceships = new List<SpaceshipItem>();
+}
+
+[Serializable]
+public class StorageItem
+{
+    public string id;
+    public int level;
+    public int amount;
+}
+
+[Serializable]
+public class SpaceshipItem
+{
+    public string id;
+    public int level;
+    public int exp;
 }
 
 // ================= CONFIGS ================= \\
@@ -307,7 +324,7 @@ public class EnemiesConfig
     public float hp;
     public float damage;
     public float cooldown;
-    public string skills;
+    public string[] skills;
 }
 
 

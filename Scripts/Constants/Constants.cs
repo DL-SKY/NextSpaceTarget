@@ -5,6 +5,8 @@
     public static float RAY_COEF = 1.1f;            //Длина луча для проверки столкновения
 
     public static float TIME_ANIMATION = 1.0f;      //Скорость анимаций перемещения
+
+    public static int BASE_EQUIPMENT_SLOTS = 3;     //Базовое кол-во слотов оснащения в корабле
 }
 
 public static class ConstantsTag
@@ -62,6 +64,23 @@ public static class ConstantsColor
     public const string AZURE_GRAY = "azure_gray";
     public const string AZURE_KRAOLA = "azure_kraola";
     public const string LIGHT_KRAOLA = "light_kraola";
+}
+
+public static class ConstantsResourcesType
+{
+    public const string MONEY = "money";
+    public const string SPACESHIP = "spaceship";
+    public const string WEAPON = "weapon";
+    public const string MODULE = "module";
+    public const string AMMO = "ammo";
+    public const string ENEMY = "enemy";
+}
+
+public static class ConstantsResourcesSubtype
+{
+    public const string COMMON = "common";
+    public const string PREMIUM = "premium";
+    public const string ENERGY = "energy";
 }
 
 public static class ConstantsSkill

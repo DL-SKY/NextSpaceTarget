@@ -1,5 +1,3 @@
-
-
 public class SkillData : SkillsConfig
 {
     #region Variables
@@ -8,12 +6,6 @@ public class SkillData : SkillsConfig
     #endregion
 
     #region Constructors
-    /*public SkillData(SkillsConfig _currentData)
-    {
-        this.Copy(_currentData);
-        SetConfig();
-    }*/
-
     public SkillData(string _id)
     {
         SetConfig(_id);

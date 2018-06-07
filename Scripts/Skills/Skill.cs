@@ -10,9 +10,9 @@ public class Skill
     #endregion
 
     #region Constructor
-    public Skill(string _skillID)
+    public Skill(string _id)
     {
-        id = _skillID;
+        id = _id;
         data = new SkillData(id);
 
         type = (EnumSkillType)Enum.Parse(typeof(EnumSkillType), data.type);
@@ -32,6 +32,5 @@ public class Skill
     #endregion
 
     #region Private methods
-
     #endregion
 }

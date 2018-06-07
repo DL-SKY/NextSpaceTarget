@@ -7,8 +7,12 @@ public class SpaceshipObject : SpaceObject
 {
     #region Variables
 
+
     private SpaceshipData data;
+    [SerializeField]
     private List<Skill> skills = new List<Skill>();
+    [SerializeField]
+    private List<Equipment> equipments = new List<Equipment>();
     #endregion
 
     #region Unity methods
@@ -16,25 +20,19 @@ public class SpaceshipObject : SpaceObject
     {
         //TODO:
         base.Initialize();
+        //Initialize();
     }
     #endregion
 
     #region Public methods
     public override void Initialize(object _data)
     {
-        if (_data != null)
-        {
-            data = _data as SpaceshipData;
-
-            hitPointsMax = data.hitPoints.ToInt();
-            shieldPointsMax = data.shieldPoints.ToInt();
-        }
-        else
-        {
-            data = new SpaceshipData(Global.Instance.CONFIGS.spaceships[0].id);
-        }
-
         base.Initialize();
+
+        if (_data != null)
+            data = _data as SpaceshipData;
+        else
+            data = new SpaceshipData(Global.Instance.CONFIGS.spaceships[0].id, 1, null);        
 
         //Skills
         skills.Clear();
@@ -44,15 +42,32 @@ public class SpaceshipObject : SpaceObject
             skills.Add(newSkill);
         }
         ApplySkills();
+
+        //Equipments
+        equipments.Clear();
+        if (data.equipments != null)
+            for (int i = 0; i < data.equipments.Count; i++)
+            {
+                var newEquipment = new Equipment(data.equipments[i]);
+                equipments.Add(newEquipment);
+            }
+
+        //Spaceship
+        ApplyLevel();
     }
 
     public SpaceshipData GetData()
     {
         return data;
     }
+
+    public int GetLevel()
+    {
+        return data.level;
+    }
     #endregion
 
-    #region Private methods
+    #region Private methods  
     private void ApplySkills()
     {
         for (int i = 0; i < skills.Count; i++)
@@ -66,6 +81,12 @@ public class SpaceshipObject : SpaceObject
                     break;
             }
         }
+    }
+
+    private void ApplyLevel()
+    {
+        hitPointsMax = data.hitPoints.ToInt();
+        shieldPointsMax = data.shieldPoints.ToInt();
     }
     #endregion
 

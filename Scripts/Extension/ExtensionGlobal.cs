@@ -176,6 +176,38 @@ public static class ExtensionGlobal
     }
     #endregion
 
+    #region EquipmentsConfig
+    public static EquipmentsConfig GetConfig(this List<EquipmentsConfig> _confs, string _id)
+    {
+        return _confs.Find(x => x.id == _id);
+    }
+
+    public static void Copy(this EquipmentsConfig _cg1, EquipmentsConfig _cg2)
+    {
+        _cg1.id = _cg2.id;
+        _cg1.name = _cg2.name;
+        _cg1.description = _cg2.description;
+        _cg1.level = _cg2.level;
+        _cg1.ammo = _cg2.ammo;
+        _cg1.damage = _cg2.damage;
+        _cg1.targets = _cg2.targets;
+        _cg1.rounds = _cg2.rounds;
+        _cg1.burst = _cg2.burst;
+        _cg1.accuracy = _cg2.accuracy;
+        _cg1.criticalChance = _cg2.criticalChance;
+        _cg1.coefLvlDamage = _cg2.coefLvlDamage;
+        _cg1.coefLvlAccuracy = _cg2.coefLvlAccuracy;
+        _cg1.coefLvlCritical = _cg2.coefLvlCritical;
+        _cg1.coefPriceLvl = _cg2.coefPriceLvl;
+        _cg1.skill = _cg2.skill;
+    }
+
+    public static void EquipmentsConfig(this EquipmentsConfig _cg1, EquipmentsConfig _cg2)
+    {
+        _cg1.Copy(_cg2);
+    }
+    #endregion
+
     #region SpaceshipsConfig
     public static SpaceshipsConfig GetConfig(this List<SpaceshipsConfig> _confs, string _id)
     {
