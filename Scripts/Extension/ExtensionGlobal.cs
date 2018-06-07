@@ -134,15 +134,21 @@ public static class ExtensionGlobal
     {
         int result = 0;
 
-        //todo:
+        var resurs = _pr.storage.Find(x => x.id == _id);
+        if (resurs != null)
+            result = resurs.amount;
 
         return result;
     }
 
     public static void AddResource(this Profile _pr, string _id, int _amount)
     {
-        //todo:
-    }
+        var resurs = _pr.storage.Find(x => x.id == _id);
+        if (resurs != null)
+            resurs.amount += _amount;
+        else
+            _pr.storage.Add(new StorageItem(_id, 1, _amount));
+    }    
     #endregion
 
     #region Config
@@ -168,12 +174,7 @@ public static class ExtensionGlobal
         _cg1.type = _cg2.type;
         _cg1.bonus = _cg2.bonus;
         _cg1.coefLvlBonus = _cg2.coefLvlBonus;
-    }
-
-    public static void SkillsConfig(this SkillsConfig _cg1, SkillsConfig _cg2)
-    {
-        _cg1.Copy(_cg2);
-    }
+    }    
     #endregion
 
     #region EquipmentsConfig
@@ -200,12 +201,7 @@ public static class ExtensionGlobal
         _cg1.coefLvlCritical = _cg2.coefLvlCritical;
         _cg1.coefPriceLvl = _cg2.coefPriceLvl;
         _cg1.skill = _cg2.skill;
-    }
-
-    public static void EquipmentsConfig(this EquipmentsConfig _cg1, EquipmentsConfig _cg2)
-    {
-        _cg1.Copy(_cg2);
-    }
+    }    
     #endregion
 
     #region SpaceshipsConfig
@@ -229,11 +225,6 @@ public static class ExtensionGlobal
         _cg1.coefLvlRepair = _cg2.coefLvlRepair;
         _cg1.coefPriceLvl = _cg2.coefPriceLvl;
         _cg1.skills = (string[])_cg2.skills.Clone();
-    }
-
-    public static void SpaceshipsConfig(this SpaceshipsConfig _cg1, SpaceshipsConfig _cg2)
-    {
-        _cg1.Copy(_cg2);
-    }
+    }    
     #endregion
 }

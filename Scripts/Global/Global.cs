@@ -161,6 +161,13 @@ public class Profile
 [Serializable]
 public class StorageItem
 {
+    public StorageItem(string _id, int _lvl, int _amount)
+    {
+        id = _id;
+        level = _lvl;
+        amount = _amount;
+    }
+
     public string id;
     public int level;
     public int amount;
@@ -230,6 +237,11 @@ public class RarityConfig
 [Serializable]
 public class SkillsConfig
 {
+    public SkillsConfig(SkillsConfig _cg2)
+    {
+        this.Copy(_cg2);
+    }
+
     public string id;
     public string name;
     public string description;
@@ -270,6 +282,11 @@ public class ResourcesConfig
 [Serializable]
 public class SpaceshipsConfig
 {
+    public SpaceshipsConfig(SpaceshipsConfig _cg2)
+    {
+        this.Copy(_cg2);
+    }
+
     public string id;
     public string name;
     public string description;
@@ -288,6 +305,11 @@ public class SpaceshipsConfig
 [Serializable]
 public class EquipmentsConfig
 {
+    public EquipmentsConfig(EquipmentsConfig _cg2)
+    {
+        this.Copy(_cg2);
+    }
+
     public string id;
     public string name;
     public string description;
